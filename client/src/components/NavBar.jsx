@@ -4,6 +4,8 @@ import { useState } from "react";
 import { VscAccount } from 'react-icons/vsc'
 import Popup from './Login'
 import { FcGoogle } from 'react-icons/fc'
+import { Link } from 'react-router-dom'
+import SignUp from './SignUp';
 
 const NavBar = () => {
 
@@ -46,7 +48,7 @@ const NavBar = () => {
                             <h1 className="text-3xl font-bold mb-8 text-center">Sign in</h1>
                             <input type="text" placeholder="Username" className="w-full h-12 bg-gray-100 rounded-xl px-4 py-4 text-base shadow-md shadow-gray-300 hover:bg-white duration-300 mb-8"></input>
                             <input type="password" placeholder="Password" className="w-full h-12 bg-gray-100 rounded-xl px-4 py-4 text-base shadow-md shadow-gray-300 hover:bg-white duration-300 mb-2"></input>
-                            <div className="flex justify-end text-xs font-semibold text-teal-600 cursor-pointer"><a>Forget password ?</a></div>
+                            <div className="flex justify-end text-xs font-semibold text-teal-600 cursor-pointer"><a>Forgot password ?</a></div>
                             <div className="flex justify-center mt-8"> 
                                 <button className="w-48 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4">Sign in</button>
                             </div>
@@ -56,7 +58,7 @@ const NavBar = () => {
                                 <FaFacebook size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-blue-700"/>
                                 <FaTwitter size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-sky-500"/>
                             </div>
-                            <h1 className="text-xs font-semibold mt-10 text-center">Don't have an account ? <a className="text-sm font-semibold text-teal-600 cursor-pointer">Sign up</a></h1>
+                            <h1 className="text-xs font-semibold mt-10 text-center">Don't have an account ? <Link className="text-sm font-semibold text-teal-600 cursor-pointer" to='sign_up'>Sign up</Link></h1>
                         </div>
                     </>}
                 handleClose={togglePopup}

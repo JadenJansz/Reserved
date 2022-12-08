@@ -1,0 +1,47 @@
+import React from 'react'
+import { useEffect } from 'react';
+import Search from '../components/Search'
+import { useLocation } from 'react-router';
+import { useState } from 'react';
+import axios from 'axios';
+import RestaurantCard from '../components/RestaurantCard';
+
+const CustomerSearchRestaurants = () => {
+
+    const [restaurants, setRestaurants] = useState([]);
+
+    const { state } = useLocation();
+    console.log(state);
+
+    useEffect(() => {
+        const getRestaurants = async () => {
+            try {
+                const response = await axios.get("http://localhost:8800/restaurants", { params: state } )
+                // console.log(response)
+                setRestaurants(response.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getRestaurants();
+    }, [])
+    
+    useEffect(() => {
+        
+        // console.log(restaurants)
+    }, [restaurants])
+    
+  return (
+    <div>
+        <Search />
+        <div>
+            {restaurants.map((restaurant) => (
+                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            ))}
+        </div>
+    </div>
+  )
+}
+
+export default CustomerSearchRestaurants
