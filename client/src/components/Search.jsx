@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Input } from 'postcss'
 import React from 'react'
 import { useState } from 'react'
@@ -6,10 +7,12 @@ import { useNavigate } from 'react-router'
 const Search = () => {
 
     const [available, setAvailable] = useState({
-        date: '',
-        time: '',
+        date: '12-12-2022',
+        time: '10.30 AM',
         count: '2'
     })
+
+    const [nameSearch, setNameSearch] = useState('');
 
     const navigate = useNavigate();
 
@@ -17,12 +20,26 @@ const Search = () => {
         setAvailable(prev => ({ ...prev, [e.target.name]: e.target.value }))
     };
 
-    const handleClick = e => {
+    const handleClick = async (e) => {
         e.preventDefault();
+
+        try {
+            const response = await axios.get('http://localhost:8800/search_restaurants_time', {params: available} )
+
+            const result = (response.data).flatMap(item => item.RestaurantID)
+            
+            navigate('/search_restaurants', { state: result })
+        } catch (error) {
+            console.log(error)
+        }
         
-        navigate('/search_restaurants', { state: available })
     }
 
+    const handleNameChange = (e) => {
+        setNameSearch(e.target.value)
+        console.log(nameSearch)
+    }
+ 
   return (
     <div className="bg-gradient-to-r from-teal-500 via-teal-400 to-teal-400 w-full h-64 sm:h-80 px-4 py-14"> 
             <div className="">
@@ -32,7 +49,7 @@ const Search = () => {
                 <input type="date" id="date" name="date" className="w-auto h-14 bg-teal-100 rounded-l-xl px-4 py-4 text-lg hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1" onChange={handleChange} />
                 <select name="time" id="time" onChange={handleChange} className="w-auto h-14 bg-teal-100 text-base px-4 py-4 hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1">
                     <option disabled={true}>Select your time</option>
-                    <option value="10">10:00 am</option>
+                    <option value="10.30 AM">10:30 AM</option>
                     <option value="12">12:00pm</option>
                     <option value="4">4:00pm</option>
                     <option value="6">6:00pm</option>
@@ -44,7 +61,7 @@ const Search = () => {
                     <option value="6">6 persons</option>
                     <option value="8">8 persons</option>
                 </select>
-                <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300"></input>
+                <input type="text" placeholder="Search Restaurants" onChange={handleNameChange} className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300"></input>
                 <button className="ml-10 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4" onClick={handleClick} >Get started</button>
             </div> 
         </div>

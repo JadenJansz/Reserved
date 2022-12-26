@@ -1,6 +1,11 @@
 import React from 'react'
+import { useLocation } from 'react-router'
 
 const AdminHome = () => {
+
+  //RestaurantId
+  const { state } = useLocation();
+  
   return (
     <div>
         <div>

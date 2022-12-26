@@ -11,18 +11,19 @@ const CustomerSearchRestaurants = () => {
     const [restaurants, setRestaurants] = useState([]);
 
     const { state } = useLocation();
-    console.log(state);
+    // console.log(state);
 
-    useEffect(() => {
-        const getRestaurants = async () => {
-            try {
-                const response = await axios.get("http://localhost:8800/restaurants", { params: state } )
-                // console.log(response)
-                setRestaurants(response.data);
-            } catch (error) {
-                console.log(error);
-            }
+    const getRestaurants = async () => {
+        try {
+            const response = await axios.get("http://localhost:8800/restaurants", { params: state } )
+            console.log(response.data)
+            setRestaurants(response.data);
+        } catch (error) {
+            console.log(error);
         }
+    }
+    
+    useEffect(() => {
 
         getRestaurants();
     }, [])
@@ -37,7 +38,7 @@ const CustomerSearchRestaurants = () => {
         <Search />
         <div>
             {restaurants.map((restaurant) => (
-                <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+                <RestaurantCard key={restaurant.RestaurantID} restaurant={restaurant} />
             ))}
         </div>
     </div>
