@@ -5,31 +5,59 @@ import Popular from './components/Popular'
 import Search from './components/Search'
 import Footer from './components/Footer'
 import AdminHome from './pages/AdminHome'
-import AdminViewRestaurant from './pages/AdminViewRestaurant'
+import AdminViewRestaurants from './pages/AdminViewRestaurants'
 import CustomerHome from './pages/CustomerHome'
 import CustomerViewRestaurant from './pages/CustomerViewRestaurant'
 import CustomerSearchRestaurants from './pages/CustomerSearchRestaurants'
 import SignUp from './components/SignUp'
 import AddRestaurant from './pages/AddRestaurant'
 import AdminLogin from './pages/AdminLogin'
+import ViewReview from './pages/ViewReview'
+import Sidebar from './components/Sidebar'
+import { useStateContext } from './contextProviders/ContextProvider'
+import AdminAddRestaurant from './pages/AdminAddRestaurant'
+import AdminViewRestaurant from './pages/AdminViewRestaurant'
+import CustomerConfirmReservation from './pages/CustomerConfirmReservation'
+import RestaurantHome from './pages/RestaurantHome'
+import NewReservations from './pages/NewReservations'
+import OldReservations from './pages/OldReservations'
 
 
 const App = () => {
+
+  const { sidebarActive } = useStateContext();
+
   return (
-    <div>
+    <div className='flex'>
       <BrowserRouter>
       {/* <NavBar /> */}
+      {sidebarActive && (<div className="w-72 sidebar dark:bg-secondary-dark-bg bg-white ">
+                            <Sidebar />
+                        </div>) 
+      }
         <Routes>
+          {/* Customer Pages */}
           <Route path='/' element={<CustomerHome />} />
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/search_restaurants' element={ <CustomerSearchRestaurants /> } />
           <Route path='/view_restaurant' element={<CustomerViewRestaurant />} />
-          <Route path='/review' element={<AdminViewRestaurant />} />
+          <Route path='/confirm_reservation' element={<CustomerConfirmReservation />} />
+
+          {/* Restaurant Pages */}
+          <Route path='/restaurant_home' element={<RestaurantHome />} />
           <Route path='/add_restaurant' element={<AddRestaurant />} />
+          <Route path='/new_reservations' element={<NewReservations />} />
+          <Route path='/old_reservations' element={<OldReservations />} />
+          <Route path='/review' element={ <ViewReview /> } />
+
+          {/* Admin Pages */}
           <Route path='/admin_login' element={<AdminLogin />} />
           <Route path='/admin_home' element={<AdminHome />} />
+          <Route path='/admin_add_restaurant' element={ <AdminAddRestaurant /> } />
+          <Route path='/admin_view_restaurants' element={<AdminViewRestaurants />} />
+          <Route path='/admin_view_restaurant' element={<AdminViewRestaurant />} />
         </Routes>
-      <Footer />
+      {/* <Footer /> */}
       </BrowserRouter>
     </div>
   )

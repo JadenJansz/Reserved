@@ -7,7 +7,7 @@ const app = express();
 
 app.use(cors());
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: "localhost",
     user: "root",
     password: "",
@@ -84,6 +84,16 @@ app.get("/admin_login", (req, res) => {
         }
 
         // return res.json(data)
+    })
+})
+
+app.get("/admin_view_reataurants", (req, res) => {
+
+    const sql = "SELECT * FROM restaurant"
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
     })
 })
 

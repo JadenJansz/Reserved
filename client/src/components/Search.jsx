@@ -25,6 +25,7 @@ const Search = () => {
 
         try {
             const response = await axios.get('http://localhost:8800/search_restaurants_time', {params: available} )
+            console.log(response)
 
             const result = (response.data).flatMap(item => item.RestaurantID)
             

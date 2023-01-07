@@ -4,11 +4,19 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import axios from 'axios'
 import { useNavigate, useNavigation } from 'react-router'
+import { useStateContext } from '../contextProviders/ContextProvider'
+import { useEffect } from 'react'
 
 
 const AdminLogin = () => {
 
     const navigate = useNavigate();
+    const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
+
+    useEffect(() => {
+        setSidebarActive(false)
+        setRestaurantSidebar(false)
+    }, [])
 
     const schema = yup.object().shape({
         email: yup.string().email().required(),

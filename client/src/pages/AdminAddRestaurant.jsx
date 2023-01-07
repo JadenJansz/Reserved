@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React,{ useEffect } from 'react'
 import { useStateContext } from '../contextProviders/ContextProvider'
 
-const AdminViewRestaurant = () => {
+const AdminAddRestaurant = () => {
 
   const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
 
@@ -12,8 +12,8 @@ const AdminViewRestaurant = () => {
 
 
   return (
-    <div>AdminViewRestaurant</div>
+    <div>AdminAddRestaurant</div>
   )
 }
 
-export default AdminViewRestaurant
+export default AdminAddRestaurant

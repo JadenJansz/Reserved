@@ -5,10 +5,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useState } from 'react'
 import { useEffect } from 'react'
+import { useStateContext } from '../contextProviders/ContextProvider'
 
 const AddRestaurant = () => {
 
     const [restaurantData, setRestaurantData] = useState({})
+    const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
+
+    useEffect(() => {
+        setSidebarActive(true)
+        setRestaurantSidebar(true)
+    }, [])
 
     
     const schema = yup.object().shape({
@@ -58,7 +65,7 @@ const AddRestaurant = () => {
     }
 
   return (
-    <div className="flex-col">
+    <div className="flex">
         <form onSubmit={handleSubmit(onSubmit)} >
             <input type="text" placeholder="Name" {...register("name")} />
             <p>{errors.name?.message}</p>

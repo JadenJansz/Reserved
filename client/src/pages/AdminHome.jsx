@@ -1,22 +1,27 @@
 import React from 'react'
-import { useLocation } from 'react-router'
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router'
+import { useStateContext } from '../contextProviders/ContextProvider';
 
 const AdminHome = () => {
 
   //RestaurantId
+  const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
   const { state } = useLocation();
+  const navigate = useNavigate();
+
+  const navigatef = () => {
+    navigate('/admin_view_restaurants')
+  }
+
+  useEffect(() => {
+    setSidebarActive(true);
+    setRestaurantSidebar(false)
+  }, [])
   
   return (
     <div>
-        <div>
-            <h1>View Restaurants</h1>
-        </div>
-        <div>
-            <h1>Add Restaurant</h1>
-        </div>
-        <div>
-            <h1>Remove Restaurant</h1>
-        </div>
+      General
     </div>
   )
 }
