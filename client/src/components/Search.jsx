@@ -45,8 +45,8 @@ const Search = () => {
             <div className="">
                 <h1 className="text-5xl font-bold text-center text-white mt-20 mx-auto">Find Your Table For Any Occasion</h1>
             </div>
-            <div className="flex justify-center mt-10"> 
-                <input type="date" id="date" name="date" className="w-auto h-14 bg-teal-100 rounded-l-xl px-4 py-4 text-lg hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1" onChange={handleChange} />
+            <div className="flex justify-center mt-2"> 
+                <input type="date" id="date" onChange={handleChange} name="date" className="w-auto h-14 bg-teal-100 rounded-l-xl px-4 py-4 text-lg hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1" />
                 <select name="time" id="time" onChange={handleChange} className="w-auto h-14 bg-teal-100 text-base px-4 py-4 hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1">
                     <option disabled={true}>Select your time</option>
                     <option value="10.30 AM">10:30 AM</option>
@@ -61,8 +61,8 @@ const Search = () => {
                     <option value="6">6 persons</option>
                     <option value="8">8 persons</option>
                 </select>
-                <input type="text" placeholder="Search Restaurants" onChange={handleNameChange} className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300"></input>
-                <button className="ml-10 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4" onClick={handleClick} >Get started</button>
+                <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300"  onChange={handleNameChange}></input>
+                <button className="ml-10 h-14 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4" onClick={handleClick} >Get started</button>
             </div> 
         </div>
         

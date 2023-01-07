@@ -24,8 +24,8 @@ const NavBar = () => {
         },
         {
             id: 2,
-            links: 'about',
-            href: '#about'
+            links: 'business',
+            href: '#business'
         },
     ]
 
