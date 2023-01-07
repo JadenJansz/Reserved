@@ -92,7 +92,7 @@ const Popular = () => {
     ]
 
   return (
-    <div className="bg-white w-full h-max sm:h-64 px-4 py-10">
+    <div className="bg-white w-screen h-max sm:h-64 px-4 py-10">
         <div className="border-y-2 border-teal-100 pt-10 pb-4 mx-24">
             <h2 className="text-2xl font-semibold text-black">
                 Popular Restaurants Near You

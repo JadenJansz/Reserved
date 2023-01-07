@@ -42,7 +42,7 @@ const Search = () => {
     }
  
   return (
-    <div className="bg-gradient-to-r from-teal-500 via-teal-400 to-teal-400 w-full h-64 sm:h-80 px-4 py-14"> 
+    <div className="bg-gradient-to-r from-teal-500 via-teal-400 to-teal-400 w-screen h-64 sm:h-80 px-4 py-14"> 
             <div className="">
                 <h1 className="text-5xl font-bold text-center text-white mt-20 mx-auto">Find Your Table For Any Occasion</h1>
             </div>
