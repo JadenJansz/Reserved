@@ -17,6 +17,7 @@ const AdminHome = () => {
   useEffect(() => {
     setSidebarActive(true);
     setRestaurantSidebar(false)
+    console.log(JSON.parse(localStorage.getItem('user')))
   }, [])
   
   return (

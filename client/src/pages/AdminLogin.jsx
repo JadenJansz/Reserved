@@ -35,6 +35,7 @@ const AdminLogin = () => {
             console.log(response.data)
 
             if(response.data.length > 0){
+                localStorage.setItem('user', JSON.stringify(response.data))
                 navigate('/admin_home', { state: response.data })
             }
         } catch (error) {
