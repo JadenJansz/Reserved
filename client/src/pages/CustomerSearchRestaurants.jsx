@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react';
 import Search from '../components/Search'
+import NavBar from '../components/NavBar'
 import { useLocation } from 'react-router';
 import { useState } from 'react';
 import axios from 'axios';
@@ -35,6 +36,7 @@ const CustomerSearchRestaurants = () => {
     
   return (
     <div>
+        <NavBar />
         <Search />
         <div>
             {restaurants.map((restaurant) => (

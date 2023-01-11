@@ -41,7 +41,7 @@ const NavBar = () => {
                     {links.map(({ id, links, href}) =>(
                     <a href={href}><li key={id} className="px-4 cursor-pointer capitalize font-semibold text-base text-black hover:scale-110 hover:text-teal-600 duration-300">{links}</li></a>  ))}
                 </ul> 
-                <VscAccount onClick={togglePopup} size={28} className="ml-2 hover:scale-105 hover:text-teal-600 cursor-pointer duration-300"/>
+                <button onClick={togglePopup} size={28} className="ml-2 h-10 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-6"> Sign up </button>
                 {isOpen && <Popup
                     content={<>
                         <div className="">
@@ -63,6 +63,7 @@ const NavBar = () => {
                     </>}
                 handleClose={togglePopup}
                 />}
+                <button onClick={togglePopup} size={28} className="ml-6 h-10 bg-teal-100 text-gray-800 font-semibold hover:bg-teal-300 duration-300 rounded-xl px-6"> Sign in </button>
             </div> 
 
         <div onClick={() => setNav(!nav)} className="cursor-pointer z-10 font-color1 md:hidden mt-1">
