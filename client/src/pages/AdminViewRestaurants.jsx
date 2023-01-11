@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useStateContext } from '../contextProviders/ContextProvider';
 import AdminViewRestaurant from './AdminViewRestaurant';
+import PopularRestaurants from '../components/PopularRestaurants';
+import AdminRestaurantCard from '../components/AdminRestaurantCard';
 
 const AdminViewRestaurants = () => {
 
@@ -15,7 +17,7 @@ const AdminViewRestaurants = () => {
             const response = await axios.get('http://localhost:8800/admin_view_reataurants');
             console.log(response.data);
 
-            // setRestaurants(response.data)
+            setRestaurants(response.data)
         } catch (error) {
             console.log(error)
         }
@@ -28,10 +30,13 @@ const AdminViewRestaurants = () => {
         console.log('lll')
     }, [])
   
+    // <AdminViewRestaurant key={restaurant.RestaurantID} restaurant={restaurant} />
     return (
     <div>
         {
-            restaurants.map((restaurant) => <AdminViewRestaurant key={restaurant.RestaurantID} restaurant={restaurant} />)
+            restaurants.map((restaurant) => (
+                <AdminRestaurantCard key={restaurant.RestaurantID} restaurant={restaurant} />
+            ))
         }
     </div>
   )

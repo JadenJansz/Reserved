@@ -3,9 +3,31 @@ import mysql from "mysql"
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
+import cookieParser from 'cookie-parser'
+import session from 'express-session'
+
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: ('http://localhost:3000'),
+    methods: ('GET', 'POST'),
+    credentials: true
+}));
+
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(
+    session({
+      key: "userId",
+      secret: "userID",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        expires: 60 * 60 * 24,
+      },
+    })
+  );
 
 const db = mysql.createPool({
     host: "localhost",
@@ -74,6 +96,8 @@ app.get("/admin_login", (req, res) => {
         if(err) return res.json(err)
         
         if(data.length > 0){
+            req.session.user = data
+            console.log(req.session.user)
             const getRetaurantId = `SELECT RestaurantID from restaurant WHERE RestaurantAdminID = (SELECT RestaurantAdminID FROM restaurant_admin WHERE Email = '${data[0].email}')`
 
             db.query(getRetaurantId, (err,data) => {
@@ -116,6 +140,14 @@ app.post("/add_restaurant_details", (req, res) => {
     })
 })
 
+app.delete("/delete_restaurant/:id", (req, res) => {
+    const sql = `DELETE FROM restaurants WHERE RestaurantID = ${req.params.id}`
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+})
 
 app.post("/create_review", (req, res) => {
     const sql = "Insert into review values (?)";

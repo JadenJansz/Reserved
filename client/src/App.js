@@ -21,11 +21,14 @@ import CustomerConfirmReservation from './pages/CustomerConfirmReservation'
 import RestaurantHome from './pages/RestaurantHome'
 import NewReservations from './pages/NewReservations'
 import OldReservations from './pages/OldReservations'
+import { Axios } from 'axios'
 
 
 const App = () => {
 
   const { sidebarActive } = useStateContext();
+
+  // Axios.defaults.withCredentials = true;
 
   return (
     <div className='flex'>
