@@ -8,7 +8,7 @@ export const RestaurantAdminLinks = [
         },
         {
           name: 'My Profile',
-          link: 'add_restaurant'
+          link: 'update_restaurant'
         },
         {
           name: 'New Reservations',

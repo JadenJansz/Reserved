@@ -34,11 +34,26 @@ const AdminLogin = () => {
 
         try {
             const response = await axios.get("http://localhost:8800/admin_login", { params: data })
-            console.log(response.data)
+            console.log(response)
 
-            if(response.data.length > 0){
-                localStorage.setItem('user', JSON.stringify(response.data))
-                navigate('/admin_home', { state: response.data })
+            if(response.data.data.status === "Inactive"){
+                navigate('/add_restaurant')
+                return
+            } 
+            if(response.data.data === "Inactive User"){
+                console.log("lol")
+                return
+            }
+            if(response.data.role === "ResAdmin"){
+                console.log(response)
+                localStorage.setItem('user', JSON.stringify(response.data.data.RestaurantID))
+                navigate('/restaurant_home', { state: response.data.data.email })
+            }
+            else{
+                console.log(response.data.email)
+                localStorage.setItem('user', JSON.stringify(response.data.data.email))
+                navigate('/admin_home', { state: response.data.data })
+
             }
         } catch (error) {
             console.log(error)

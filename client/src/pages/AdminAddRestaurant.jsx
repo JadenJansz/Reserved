@@ -27,7 +27,7 @@ const AdminAddRestaurant = () => {
     console.log(data)
 
     try {
-        const response = await axios.get("http://localhost:8800/admin_login", { params: data })
+        const response = await axios.post("http://localhost:8800/admin_create_restaurant", data )
         console.log(response.data)
 
         
@@ -45,7 +45,7 @@ const AdminAddRestaurant = () => {
         <input type="text" placeholder="Location" {...register("location")} />
         <p>{errors.location?.message}</p>
 
-        <button>Login</button>
+        <button>Add Restaurant</button>
       </form>
     </div>
   )

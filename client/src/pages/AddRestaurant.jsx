@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useStateContext } from '../contextProviders/ContextProvider'
+import ImageUploader from '../components/ImageUploader'
 
 const AddRestaurant = () => {
 
@@ -13,8 +14,8 @@ const AddRestaurant = () => {
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
 
     useEffect(() => {
-        setSidebarActive(true)
-        setRestaurantSidebar(true)
+        setSidebarActive(false)
+        setRestaurantSidebar(false)
     }, [])
 
     
@@ -25,10 +26,10 @@ const AddRestaurant = () => {
         address3: yup.string(),
         contactNumber: yup.string().length(10).required(),
         cuisine: yup.string().required(),
-        menu: yup.mixed().required()
-                .test("required", "You need to provide a file", (file) => {
-                return file && file.length
-        }),
+        // menu: yup.mixed()
+        //         .test("required", "You need to provide a file", (file) => {
+        //         return file && file.length
+        // }),
         open: yup.string().required(),
         close: yup.string().required(),
         parking: yup.string().required(),
@@ -36,10 +37,10 @@ const AddRestaurant = () => {
         website: yup.string().url(),
         facilities: yup.string().required(),
         location: yup.string(),
-        image: yup.mixed().required()
-                .test("required", "You need to provide a file", (file) => {
-        return file && file.length
-}),
+        // image: yup.mixed().required()
+        //         .test("required", "You need to provide a file", (file) => {
+        // return file && file.length
+        // }),
      })
     
     const { register, handleSubmit, formState: {errors} } = useForm({
@@ -66,7 +67,7 @@ const AddRestaurant = () => {
 
   return (
     <div className="flex">
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form onSubmit={handleSubmit(onSubmit)}>
             <input type="text" placeholder="Name" {...register("name")} />
             <p>{errors.name?.message}</p>
 
@@ -85,8 +86,8 @@ const AddRestaurant = () => {
             <input type="text" placeholder="Cuisine" {...register("cuisine")} />
             <p>{errors.cuisine?.message}</p>
 
-            <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
-            <p>{errors.menu?.message}</p>
+            {/* <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
+            <p>{errors.menu?.message}</p> */}
 
             <input type="time" {...register("open")} />
             <p>{errors.open?.message}</p>
@@ -109,9 +110,10 @@ const AddRestaurant = () => {
             <textarea placeholder='Location' {...register("location")} />
             <p>{errors.location?.message}</p>
 
-            <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
-            <p>{errors.image?.message}</p>
+            {/* <input type="file" accept="image/*" name='image' placeholder='Images' {...register("image")} />
+            <p>{errors.image?.message}</p> */}
 
+            {/* <ImageUploader register={register} errors={errors} /> */}
 
             <button>Lets Go</button>
         </form>

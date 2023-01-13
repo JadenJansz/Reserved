@@ -23,6 +23,7 @@ import RestaurantHome from './pages/RestaurantHome'
 import NewReservations from './pages/NewReservations'
 import OldReservations from './pages/OldReservations'
 import { Axios } from 'axios'
+import UpdateRestaurant from './pages/UpdateRestaurant'
 
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
           <Route path='/new_reservations' element={<NewReservations />} />
           <Route path='/old_reservations' element={<OldReservations />} />
           <Route path='/review' element={ <ViewReview /> } />
+          <Route path='/update_restaurant' element={<UpdateRestaurant /> } />
 
           {/* Admin Pages */}
           <Route path='/admin_login' element={<AdminLogin />} />
