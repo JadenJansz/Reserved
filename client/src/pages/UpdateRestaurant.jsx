@@ -1,20 +1,37 @@
 import axios from 'axios'
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import ImageUploader from '../components/ImageUploader'
+import { useStateContext } from '../contextProviders/ContextProvider'
 
 const UpdateRestaurant = () => {
 
     const [restaurantData, setRestaurantData] = useState({})
+    const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
 
-    const retrieveRestaurant = () => {
+    
+    
+    const retrieveRestaurant = async () => {
+        const id = localStorage.getItem('user')
+        
         try {
-            const response = axios.get("http://localhost:8800/owner_view_restaurant")
-
-            setRestaurantData(restaurantData)
+            const response = await axios.get("http://localhost:8800/owner_view_restaurant", { params : {id: id} })
+            console.log(response)
+            
+            setRestaurantData(response.data[0])
         } catch (error) {
             console.log(error);
         }
     }
+    
+    useEffect(() => {
+        setSidebarActive(true)
+        setRestaurantSidebar(true)
+        retrieveRestaurant()
+    }, [])
 
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
@@ -64,51 +81,52 @@ const UpdateRestaurant = () => {
   return (
     <div className="flex-col">
         <form onSubmit={handleSubmit(onSubmit)} >
-            <input type="text" placeholder="Name" {...register("name")} />
+            <input type="text" placeholder="Name" defaultValue={restaurantData.Name} {...register("name")} />
             <p>{errors.name?.message}</p>
 
-            <input type="text" placeholder="Address Line 1" {...register("address1")} />
+            <input type="text" placeholder="Address Line 1" defaultValue={restaurantData.AddressLine1} {...register("address1")} />
             <p>{errors.address1?.message}</p>
 
-            <input type="text" placeholder="Address Line 2" {...register("address2")} />
+            <input type="text" placeholder="Address Line 2" defaultValue={restaurantData.AddressLine2} {...register("address2")} />
             <p>{errors.address2?.message}</p>
 
-            <input type="text" placeholder="Address Line 3" {...register("address3")} />
+            <input type="text" placeholder="Address Line 3" defaultValue={restaurantData.AddressLine3} {...register("address3")} />
             <p>{errors.address3?.message}</p>
 
-            <input type="text" placeholder="Contact Number" {...register("contactNumber")} />
+            <input type="text" placeholder="Contact Number" defaultValue={restaurantData.ContactNumber} {...register("contactNumber")} />
             <p>{errors.contactNumber?.message}</p>
             
-            <input type="text" placeholder="Cuisine" {...register("cuisine")} />
+            <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
             <p>{errors.cuisine?.message}</p>
 
             <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
             <p>{errors.menu?.message}</p>
 
-            <input type="time" {...register("open")} />
+            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} />
             <p>{errors.open?.message}</p>
 
-            <input type="time" {...register("close")} />
+            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} />
             <p>{errors.close?.message}</p>
 
-            <input type="text" placeholder="Parking" {...register("parking")} />
+            <input type="text" placeholder="Parking" defaultValue={restaurantData.ParkingDetails} {...register("parking")} />
             <p>{errors.parking?.message}</p>
 
-            <input type="text" placeholder="Payment Options" {...register("payment")} />
+            <input type="text" placeholder="Payment Options" defaultValue={restaurantData.PaymentOption} {...register("payment")} />
             <p>{errors.payment?.message}</p>
 
-            <input type="text" placeholder="Website URL" {...register("website")} />
+            <input type="text" placeholder="Website URL" defaultValue={restaurantData.Website} {...register("website")} />
             <p>{errors.website?.message}</p>
 
-            <textarea placeholder='Facilities' {...register("facilities")} />
+            <textarea placeholder='Facilities' defaultValue={restaurantData.Facilities} {...register("facilities")} />
             <p>{errors.facilities?.message}</p>
 
-            <textarea placeholder='Location' {...register("location")} />
+            <textarea placeholder='Location'  defaultValue={restaurantData.Location ? restaurantData.Location : "null"}  {...register("location")} />
             <p>{errors.location?.message}</p>
 
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p>
 
+            <ImageUploader />
 
             <button>Lets Go</button>
         </form>
