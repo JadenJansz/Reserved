@@ -37,6 +37,7 @@ const Sidebar = () => {
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
+                    <img />
                     <h2 className="capitalize">{link.name}</h2>
                   </NavLink>
                 ))}

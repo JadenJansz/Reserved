@@ -4,7 +4,7 @@ export const RestaurantAdminLinks = [
       links: [
         {
           name: 'General',
-          link: 'restaurant_home'
+          link: 'restaurant_home',
         },
         {
           name: 'My Profile',
