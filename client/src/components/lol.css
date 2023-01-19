@@ -1,22 +1,24 @@
 section {
-    padding: 2rem 0;
+    padding: 1rem 0;
   }
   
-  label {
+  .imageLabel {
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px dotted black;
-    border-radius: 20px;
-    width: 10rem;
+    border-radius: 10px;
+    width: 60rem;
     height: 10rem;
     cursor: pointer;
-    font-size: large;
+    font-size:medium;
+    font-style: bold;
+    color: #009688;
+    background-color: #CCFBF1;
   }
   
-  label span {
+  .imageLabel span {
     font-weight: lighter;
     font-size: small;
     padding-top: 0.5rem;
@@ -29,6 +31,8 @@ section {
   img {
     padding: 0;
     margin: 0;
+    border-radius: 7.5px;
+    margin-bottom: 4px;
   }
   
   .images {
@@ -42,7 +46,6 @@ section {
   .image {
     margin: 1rem 0.5rem;
     position: relative;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
   }
   
   .image button {
@@ -51,17 +54,14 @@ section {
     right: 0;
     cursor: pointer;
     border: none;
-    color: white;
-    background-color: lightcoral;
-  }
-  
-  .image button:hover {
-    background-color: red;
+    color: lightcoral;
+    font-size:small;
   }
   
   .image p {
     padding: 0 0.5rem;
     margin: 0;
+    font-size:small;
   }
   
   .upload-btn {
@@ -69,14 +69,13 @@ section {
     display: block;
     margin: 0 auto;
     border: none;
-    border-radius: 20px;
-    width: 10rem;
+    border-radius: 10px;
+    width: 15rem;
     height: 3rem;
     color: white;
-    background-color: green;
+    background-color: #009688;
   }
-  
-  label:hover,
+
   .upload-btn:hover {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
       rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;

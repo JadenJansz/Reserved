@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './lol.css'
+import { BiImageAdd } from 'react-icons/bi'
 
 const ImageUploader = ({ register, errors }) => {
     const [selectedImages, setSelectedImages] = useState([]);
@@ -25,8 +26,9 @@ const ImageUploader = ({ register, errors }) => {
   
     return (
       <section>
-        <label>
-          + Add Images
+        <label className='imageLabel'>
+          <BiImageAdd className='w-16 h-16'/>
+           Browse and add images from your local computer
           <br />
           <span>up to 10 images</span>
           <input
@@ -57,8 +59,8 @@ const ImageUploader = ({ register, errors }) => {
                 console.log(selectedImages);
               }}
             >
-              UPLOAD {selectedImages.length} IMAGE
-              {selectedImages.length === 1 ? "" : "S"}
+              Upload {selectedImages.length} image
+              {selectedImages.length === 1 ? "" : "s"}
             </button>
           ))}
   
@@ -69,7 +71,7 @@ const ImageUploader = ({ register, errors }) => {
                 <div key={image} className="image">
                   <img src={image} height="150" width="150" alt="upload" />
                   <button onClick={() => deleteHandler(image)}>
-                    delete image
+                    Delete image
                   </button>
                   <p>{index + 1}</p>
                 </div>

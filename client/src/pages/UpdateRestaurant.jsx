@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import ImageUploader from '../components/ImageUploader'
 import { useStateContext } from '../contextProviders/ContextProvider'
+import AdminNavBar from '../components/AdminNavBar'
 
 const UpdateRestaurant = () => {
 
@@ -79,43 +80,84 @@ const UpdateRestaurant = () => {
 
 
   return (
-    <div className="flex-col">
-        <form onSubmit={handleSubmit(onSubmit)} >
-            <input type="text" placeholder="Name" defaultValue={restaurantData.Name} {...register("name")} />
-            <p>{errors.name?.message}</p>
-
-            <input type="text" placeholder="Address Line 1" defaultValue={restaurantData.AddressLine1} {...register("address1")} />
-            <p>{errors.address1?.message}</p>
-
-            <input type="text" placeholder="Address Line 2" defaultValue={restaurantData.AddressLine2} {...register("address2")} />
-            <p>{errors.address2?.message}</p>
-
-            <input type="text" placeholder="Address Line 3" defaultValue={restaurantData.AddressLine3} {...register("address3")} />
-            <p>{errors.address3?.message}</p>
-
-            <input type="text" placeholder="Contact Number" defaultValue={restaurantData.ContactNumber} {...register("contactNumber")} />
-            <p>{errors.contactNumber?.message}</p>
+    <div className="">
+        <AdminNavBar />
+        <div className="flex mt-28 px-16">
+            <h1 className='text-2xl font-medium text-gray-700 mb-6 mt-4'>General details</h1>
+        </div>
+        <div className='ml-16 mt-4'>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex justify-start space-x-16'>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Primary name</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.name?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Secondary name</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.name?.message}</p>
+                </div>
+            </div>
+            <div className='flex justify-start space-x-8 mt-4'>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Display address line 1</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.AddressLine1} {...register("address1")} className="w-[300px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.address1?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Display address line 2</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.AddressLine2} {...register("address2")} className="w-[300px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.address2?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Display address line 3</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.AddressLine3} {...register("address3")} className="w-[300px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.address3?.message}</p>
+                </div>
+            </div>
+            <div className='mt-6 mb-10'>
+                <h1 className='text-base font-medium text-gray-400 mt-4'>Contact No.</h1>
+                <input type="text" placeholder="" defaultValue={restaurantData.ContactNumber} {...register("contactNumber")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                <p className="ml-2 text-sm text-rose-600">{errors.contactNumber?.message}</p>
+            </div>
             
-            <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
-            <p>{errors.cuisine?.message}</p>
+            {/* <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
+            <p>{errors.cuisine?.message}</p> */}
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Cuisine & Working hours</h1>
+                <div className='flex justify-between '>
+                    <div>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
+                        <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
+                        <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
+                    </div>
+                    <div className='block'>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Operation hours</h1>
+                        <div className='flex justify-start space-x-2'>
+                            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                            <p className="ml-2 text-sm text-rose-600">{errors.open?.message}</p>
+                            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                            <p className="ml-2 text-sm text-rose-600">{errors.close?.message}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
-            <p>{errors.menu?.message}</p>
-
-            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} />
-            <p>{errors.open?.message}</p>
-
-            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} />
-            <p>{errors.close?.message}</p>
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images & Location</h1>
+                <h1 className='text-base font-medium text-gray-400 mt-10'>Enter your images</h1>
+                <ImageUploader />
+                <h1 className='text-base font-medium text-gray-400 mt-10'>Search your restaurant loaaction on Google maps and copy the browser URL and paste here</h1>
+                <input type="text" placeholder="" defaultValue={restaurantData.Website} {...register("website")} className="w-[960px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
+            </div>
 
             <input type="text" placeholder="Parking" defaultValue={restaurantData.ParkingDetails} {...register("parking")} />
             <p>{errors.parking?.message}</p>
 
             <input type="text" placeholder="Payment Options" defaultValue={restaurantData.PaymentOption} {...register("payment")} />
             <p>{errors.payment?.message}</p>
-
-            <input type="text" placeholder="Website URL" defaultValue={restaurantData.Website} {...register("website")} />
-            <p>{errors.website?.message}</p>
 
             <textarea placeholder='Facilities' defaultValue={restaurantData.Facilities} {...register("facilities")} />
             <p>{errors.facilities?.message}</p>
@@ -126,10 +168,9 @@ const UpdateRestaurant = () => {
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p>
 
-            <ImageUploader />
-
             <button>Lets Go</button>
         </form>
+        </div>
     </div>
   )
 }
