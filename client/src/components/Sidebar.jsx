@@ -10,12 +10,12 @@ const Sidebar = () => {
     const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-base text-gray-700 font-medium m-2';
 
   return (
-    <div className='fixed w-64 ml-6 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 pr-6 border-r-2 border-teal-500'>
+    <div className='fixed w-72 pl-4 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 pr-6 border-r-2 border-teal-500'>
         <>
             <div className='flex justify-between items-center'>
                 <Link to='/' onClick={() => {}} className='items-center gap-3 ml-3 mt-6 flex tracking-tight'>
                   <div className="flex text-black font-logo">
-                    <h1 className="font-bold text-2xl">Reserved</h1>
+                    <h1 className="font-bold text-2xl pl-8">Reserved</h1>
                     <h2 className="ml-1 mt-2.5 text-sm">.com</h2>
                   </div>
                 </Link>
@@ -37,6 +37,7 @@ const Sidebar = () => {
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}
                   >
+                    {link.icon}
                     <h2 className="capitalize">{link.name}</h2>
                   </NavLink>
                 ))}
@@ -55,6 +56,7 @@ const Sidebar = () => {
                       })}
                       className={({ isActive }) => (isActive ? activeLink : normalLink)}
                     >
+                      {link.icon}
                       <h2 className="capitalize">{link.name}</h2>
                     </NavLink>
                   ))}

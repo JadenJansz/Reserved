@@ -22,7 +22,6 @@ const SignUp = () => {
             type: "email",
             placeholder: "E-mail",
             errorMessage: "Enter a valid email",
-            label: "E-mail",
             required: true
         },
         {
@@ -31,7 +30,6 @@ const SignUp = () => {
             type: "text",
             placeholder: "First Name",
             errorMessage: 'Enter a valid First Name',
-            label: "First Name",
             required: true
         },
         {
@@ -40,7 +38,6 @@ const SignUp = () => {
             type: "text",
             placeholder: "Last Name",
             errorMessage: "Enter a valid Last Name",
-            label: "Last Name",
             required: true
         },
         {
@@ -49,7 +46,6 @@ const SignUp = () => {
             type: "text",
             placeholder: "Contact Number",
             errorMessage: "Enter a valid Contact Number",
-            label: "Contact Number",
             required: true
         },
         {
@@ -58,7 +54,6 @@ const SignUp = () => {
             type: "text",
             placeholder: "City",
             errorMessage: "Enter a valid City",
-            label: "City",
             required: true
         },
         {
@@ -67,7 +62,6 @@ const SignUp = () => {
             type: "password",
             placeholder: "Password",
             errorMessage: "Password should be more than 5 characters",
-            label: "Pasword",
             required: true
         },
         {
@@ -77,7 +71,6 @@ const SignUp = () => {
             placeholder: "Confirm Password",
             errorMessage: "Passwords don't match",
             pattern: user.password,
-            label: "Confirm Password",
             required: true
         }
     ]
@@ -99,10 +92,10 @@ const SignUp = () => {
     }
 
   return (
-    <div>
+    <div className=''>
         <form onSubmit={createUser}>
             {inputs.map((input) => (
-                <FormInput key={input.id} {...input} value={user[input.name]} onChange={handleChange} />
+                <FormInput className="w-96 bg-teal-100 h-12 rounded-lg border-0" key={input.id} {...input} value={user[input.name]} onChange={handleChange}/>
             ))}
         <button>Sign Up</button>
         </form>
