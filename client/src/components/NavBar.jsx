@@ -1,11 +1,8 @@
 import React from 'react'
 import { FaBars, FaTimes,FaFacebook, FaTwitter } from "react-icons/fa"
 import { useState } from "react";
-import { VscAccount } from 'react-icons/vsc'
 import Popup from './Login'
-import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
-import SignUp from './SignUp';
+import { Link, useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
 
@@ -20,12 +17,12 @@ const NavBar = () => {
         {
             id: 1,
             links: 'home',
-            href: '#home'
+            href: '/'
         },
         {
             id: 2,
             links: 'business',
-            href: '#business'
+            href: '/admin_login'
         },
     ]
 
@@ -39,31 +36,15 @@ const NavBar = () => {
             <div className="flex mr-24 items-center"> 
                 <ul className="hidden md:flex">
                     {links.map(({ id, links, href}) =>(
-                    <a href={href}><li key={id} className="px-4 cursor-pointer capitalize font-semibold text-base text-black hover:scale-110 hover:text-teal-600 duration-300">{links}</li></a>  ))}
+                    <a href={href} key={id}><li className="px-4 cursor-pointer capitalize font-semibold text-base text-black hover:scale-110 hover:text-teal-600 duration-300">{links}</li></a>  ))}
                 </ul> 
-                <button onClick={togglePopup} size={28} className="ml-2 h-10 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-6"> Sign up </button>
+                <button onClick={togglePopup} size={28} className="ml-2 h-10 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-6"> Sign In </button>
                 {isOpen && <Popup
-                    content={<>
-                        <div className="">
-                            <h1 className="text-3xl font-bold mb-8 text-center">Sign in</h1>
-                            <input type="text" placeholder="Username" className="w-full h-12 bg-gray-100 rounded-xl px-4 py-4 text-base shadow-md shadow-gray-300 hover:bg-white duration-300 mb-8"></input>
-                            <input type="password" placeholder="Password" className="w-full h-12 bg-gray-100 rounded-xl px-4 py-4 text-base shadow-md shadow-gray-300 hover:bg-white duration-300 mb-2"></input>
-                            <div className="flex justify-end text-xs font-semibold text-teal-600 cursor-pointer"><a>Forgot password ?</a></div>
-                            <div className="flex justify-center mt-8"> 
-                                <button className="w-48 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4">Sign in</button>
-                            </div>
-                            <h1 className="text-sm font-semibold mt-8 text-center">- Or Sign in with -</h1>
-                            <div className="flex justify-center gap-10 cursor-pointer mt-4">
-                                <FcGoogle size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300"/>
-                                <FaFacebook size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-blue-700"/>
-                                <FaTwitter size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-sky-500"/>
-                            </div>
-                            <h1 className="text-xs font-semibold mt-10 text-center">Don't have an account ? <Link className="text-sm font-semibold text-teal-600 cursor-pointer" to='sign_up'>Sign up</Link></h1>
-                        </div>
-                    </>}
                 handleClose={togglePopup}
                 />}
-                <button onClick={togglePopup} size={28} className="ml-6 h-10 bg-teal-100 text-gray-800 font-semibold hover:bg-teal-300 duration-300 rounded-xl px-6"> Sign in </button>
+                <Link to='/sign_up'>
+                <button onClick={togglePopup} size={28} className="ml-6 h-10 bg-teal-100 text-gray-800 font-semibold hover:bg-teal-300 duration-300 rounded-xl px-6"> Sign Up </button>
+                </Link>
             </div> 
 
         <div onClick={() => setNav(!nav)} className="cursor-pointer z-10 font-color1 md:hidden mt-1">
@@ -72,7 +53,7 @@ const NavBar = () => {
                 {nav && (
                 <ul className="flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen dark-back">
                 {links.map(({ id, links, href}) =>(
-                    <a onClick={() => setNav(!nav)} href={href}><li key={id} className="px-4 cursor-pointer capitalize py-6 text-3xl font-light font-color1 hover:text-teal-400 hover:-rotate-6 hover:scale-110 duration-300">{links}</li></a>  ))}
+                    <Link to={href} key={id} ><li className="px-4 cursor-pointer capitalize py-6 text-3xl font-light font-color1 hover:text-teal-400 hover:-rotate-6 hover:scale-110 duration-300">{links}</li></Link>  ))}
                 </ul>
                 )}
         </div>

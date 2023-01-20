@@ -34,6 +34,10 @@ const UpdateRestaurant = () => {
         retrieveRestaurant()
     }, [])
 
+    useEffect(() => {
+        console.log(restaurantData)
+    }, [restaurantData])
+
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
         address1: yup.string().required(),
@@ -147,11 +151,20 @@ const UpdateRestaurant = () => {
             <div className='border-t-2 border-teal-500 pb-8'>
                 <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images & Location</h1>
                 <h1 className='text-base font-medium text-gray-400 mt-10'>Enter your images</h1>
-                <ImageUploader />
+                {/* <ImageUploader /> */}
                 <h1 className='text-base font-medium text-gray-400 mt-10'>Search your restaurant loaaction on Google maps and copy the browser URL and paste here</h1>
                 <input type="text" placeholder="" defaultValue={restaurantData.Website} {...register("website")} className="w-[960px] h-12 bg-teal-100 border-0 rounded-lg"/>
                 <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
             </div>
+            <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
+            <p>{errors.cuisine?.message}</p>
+
+
+            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} />
+            <p>{errors.open?.message}</p>
+
+            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} />
+            <p>{errors.close?.message}</p>
 
             <input type="text" placeholder="Parking" defaultValue={restaurantData.ParkingDetails} {...register("parking")} />
             <p>{errors.parking?.message}</p>
@@ -165,11 +178,18 @@ const UpdateRestaurant = () => {
             <textarea placeholder='Location'  defaultValue={restaurantData.Location ? restaurantData.Location : "null"}  {...register("location")} />
             <p>{errors.location?.message}</p>
 
+            {/* <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
+            <p>{errors.menu?.message}</p>
+
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
-            <p>{errors.image?.message}</p>
+            <p>{errors.image?.message}</p> */}
+
 
             <button>Lets Go</button>
         </form>
+
+        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
+        
         </div>
     </div>
   )

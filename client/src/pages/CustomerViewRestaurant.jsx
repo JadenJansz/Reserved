@@ -2,23 +2,72 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import NavBar from '../components/NavBar'
 import Taj from "../assets/taj.jpg"
 import Hilton from "../assets/hilton.jpg"
 import Iframe from 'react-iframe'
+import CustomerViewReview from '../components/CustomerViewReview';
+import { count, options } from '../data/selectData';
 
 const CustomerViewRestaurant = () => {
 
     const [restaurant, setRestaurant] = useState({});
+    const [reviews, setReviews] = useState([])
+    const [tableDetails, setTableDetails] = useState({})
 
     const { state } = useLocation();
+    const navigation = useNavigate(); 
     console.log(state);
+
+    const getReview = async () => {
+      try {
+        const response = await axios.get("http://localhost:8800/view_review_customer", { params: { id: state.RestaurantID } } )
+        setReviews(response.data)
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
     useEffect(() => {
-        
+        const table = JSON.parse(localStorage.getItem('table_details'))
+        // console.log(table)
+        setTableDetails(table)
         setRestaurant(state)
+        getReview()
     },[])
+
+    const handleChange = (e) => {
+      setTableDetails(prev => ({...prev, [e.target.name]: e.target.value }) )
+    }
+
+    // useEffect(() => {
+    //   console.log(tableDetails)
+    // }, [tableDetails])
+
+    const checkAvailability = async () => {
+      try {
+        localStorage.setItem('table_details', JSON.stringify(tableDetails))
+        const response = await axios.get("http://localhost:8800/check_availability", { params: { id: state.RestaurantID , table: tableDetails } } )
+        console.log(response.data)
+        
+        if(response.data.length === 0){
+
+          if(!sessionStorage.getItem('user')){
+            alert("please sign in before you proceed")
+          }
+          else{
+            navigation('/confirm_reservation',{ state: restaurant } )
+          }
+        }else{
+
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
   return (
     <div>
@@ -29,8 +78,8 @@ const CustomerViewRestaurant = () => {
       </div>
       <div className="flex mt-28 mx-24 justify-between">
         <div className="w-[850px] h-max pr-6">
-          <h1 className="text-4xl font-bold text-gray-800">Taj Samudra - The Restaurant</h1>
-          <h2 className="text-lg text-gray-500 mt-2">Galle face center road - Colombo 08, Sri Lanka</h2>
+          <h1 className="text-4xl font-bold text-gray-800">{restaurant.Name}</h1>
+          <h2 className="text-lg text-gray-500 mt-2">{restaurant.AddressLine1} {restaurant.AddressLine2} {restaurant.AddressLine3}</h2>
           <div className="flex justify-between my-8 pb-2 border-b-2 border-teal-500">
             <h1 className="text-base text-gray-800 font-semibold">115 Reviews</h1>
             <h1 className="text-base text-gray-800 font-semibold">Starting from $20</h1>
@@ -85,43 +134,30 @@ const CustomerViewRestaurant = () => {
                 Curd With Treacle
             </h1>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">What people are saying</h1>
-            <div className="block py-10">
-              <div className="flex justify-between bg-teal-100 rounded-2xl">
-                <img src={Hilton} className="w-32 h-32 mr-4 rounded-full m-8"></img>
-                <div className="block">
-                    <div className="flex justify-between py-6 px-8">
-                      <h1 className="text-base text-gray-800 font-semibold">Edward Raymond Finn</h1>
-                      <h1 className="text-base text-gray-800 font-semibold">*****</h1>
-                      <h1 className="text-base text-gray-800 font-semibold">5th Dec 2022</h1>
-                    </div>
-                    <p className="px-8 pb-4 text-sm">
-                      First night in Colombo so ate in The Taj Samudra as it was raining heavily. 
-                      Meal was cheap by western standards but expensive by local. 
-                      Food was good not great. Good buffet option with fish and crab cooked to order.
-                    </p>
-                </div>
-              </div>
-            </div>
+
+            {
+              reviews.map((review) => (
+                <CustomerViewReview key={review.ReviewID} review={review} />
+              ))
+            }
         </div>
         <div>
           <div className="block w-[400px] border-2 border-teal-500 rounded-lg p-6 mb-8">
             <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Make a reservation</h1>
-            <input type="date" id="date" name="date" className="w-full h-12 mb-4 bg-teal-100 rounded-lg px-4 text-sm border-0" /><br />
-            <select name="time" id="time" className="w-full h-12 mb-4 bg-teal-100 text-sm px-4 rounded-lg"><br />
-              <option disabled={true}>Select your time</option>
-              <option value="10.30 AM">10:30 AM</option>
-              <option value="12">12:00pm</option>
-              <option value="4">4:00pm</option>
-              <option value="6">6:00pm</option>
+            <input type="date" id="date" name="date" defaultValue={tableDetails.date} onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 rounded-lg px-4 text-sm border-0" /><br />
+            <select name="time" id="time" onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 text-sm px-4 rounded-lg">
+                    <option disabled={true}>Select your time</option>
+                    {options.map((option) => (
+                      <option key={option.id} selected={tableDetails.time === option.value} value={option.value}>{option.label}</option>
+                    ))}
             </select>
-            <select name="count" id="count" className="w-full h-12 mb-8 bg-teal-100 text-sm px-4 rounded-lg">
-              <option disabled={true} className="">Person count</option><br />
-              <option value="2">2 persons</option>
-              <option value="4">4 persons</option>
-              <option value="6">6 persons</option>
-              <option value="8">8 persons</option>
+            <select name="count" id="count" onChange={handleChange} className="w-full h-12 mb-8 bg-teal-100 text-sm px-4 rounded-lg">
+                    <option disabled={true} className="">Person count</option>
+                    {count.map((number) => (
+                      <option key={number.id} selected={tableDetails.count === number.value} value={number.value}>{number.label}</option>
+                    ))}
             </select>
-            <button className="w-full h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6"> Check Availability </button>
+            <button className="w-full h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6" onClick={checkAvailability}> Check Availability </button>
           </div>
           <div className="block w-[400px] border-2 border-teal-500 rounded-lg py-6">
             <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Location</h1>

@@ -1,6 +1,9 @@
 import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import FormInput from './FormInput'
 
 const SignUp = () => {
@@ -15,65 +18,20 @@ const SignUp = () => {
         confirmPassword: ''
     })
 
-    const inputs =[
-        {
-            id: 1,
-            name: "email",
-            type: "email",
-            placeholder: "E-mail",
-            errorMessage: "Enter a valid email",
-            required: true
-        },
-        {
-            id: 2,
-            name: "firstName",
-            type: "text",
-            placeholder: "First Name",
-            errorMessage: 'Enter a valid First Name',
-            required: true
-        },
-        {
-            id: 3,
-            name: "lastName",
-            type: "text",
-            placeholder: "Last Name",
-            errorMessage: "Enter a valid Last Name",
-            required: true
-        },
-        {
-            id: 4,
-            name: "contactNumber",
-            type: "text",
-            placeholder: "Contact Number",
-            errorMessage: "Enter a valid Contact Number",
-            required: true
-        },
-        {
-            id: 5,
-            name: "city",
-            type: "text",
-            placeholder: "City",
-            errorMessage: "Enter a valid City",
-            required: true
-        },
-        {
-            id: 6,
-            name: "password",
-            type: "password",
-            placeholder: "Password",
-            errorMessage: "Password should be more than 5 characters",
-            required: true
-        },
-        {
-            id: 7,
-            name: "confirmPassword",
-            type: "password",
-            placeholder: "Confirm Password",
-            errorMessage: "Passwords don't match",
-            pattern: user.password,
-            required: true
-        }
-    ]
+    const schema = yup.object().shape({
+        email: yup.string().email().required(),
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
+        contactNumber: yup.string().length(10).required(),
+        city: yup.string().required(),
+        password: yup.string().required(),
+        confirmPassword: yup.string().oneOf([yup.ref("password"), null])
+    })
+
+    const { register, handleSubmit, formState: {errors} } = useForm({
+        resolver: yupResolver(schema)
+    })
+
 
     const handleChange = (e) => {
         setUser(prev => ({...prev, [e.target.name]: e.target.value }) )
@@ -92,11 +50,28 @@ const SignUp = () => {
     }
 
   return (
-    <div className=''>
-        <form onSubmit={createUser}>
-            {inputs.map((input) => (
-                <FormInput className="w-96 bg-teal-100 h-12 rounded-lg border-0" key={input.id} {...input} value={user[input.name]} onChange={handleChange}/>
-            ))}
+    <div>
+        <form onSubmit={handleSubmit(createUser)}>
+            <input type="text" placeholder="Email" {...register("email")} />
+            <p>{errors.email?.message}</p>
+
+            <input type="text" placeholder="First Name" {...register("firstName")} />
+            <p>{errors.firstName?.message}</p>
+
+            <input type="text" placeholder="Last Name" {...register("lastName")} />
+            <p>{errors.lastName?.message}</p>
+
+            <input type="text" placeholder="Contact Number" {...register("contactNumber")} />
+            <p>{errors.contactNumber?.message}</p>
+
+            <input type="text" placeholder="City" {...register("city")} />
+            <p>{errors.city?.message}</p>
+
+            <input type="password" placeholder="Password" {...register("password")} />
+            <p>{errors.password?.message}</p>
+
+            <input type="password" placeholder="Confirm Password" {...register("confirmPassword")} />
+            <p>{errors.confirmPassword?.message}</p>
         <button>Sign Up</button>
         </form>
     </div>

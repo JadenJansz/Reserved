@@ -1,16 +1,34 @@
 import axios from 'axios'
 import { Input } from 'postcss'
 import React from 'react'
+import { useEffect } from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { json, useNavigate } from 'react-router'
+
 
 const Search = () => {
+    // const date = `${new Date().getFullYear()+1}-${new Date().getMonth()+1}-${new Date().getDate()}`.toString()
 
     const [available, setAvailable] = useState({
-        date: '12-12-2022',
-        time: '10.30 AM',
+        date: "",
+        time: '10.00',
         count: '2'
     })
+
+    const [currentDate, setCurrentDate] = useState('');
+
+    useEffect(() => {
+        let day = new Date().getDate()
+        let month = new Date().getMonth()+1
+        let year = new Date().getFullYear()
+
+        if (day < 10) day = '0' + day;
+        if (month < 10) month = '0' + month;
+        const date = year + '-' + month + '-' + day
+        setAvailable({ ...available, date: date })
+        setCurrentDate(date)
+    }, [])
+
 
     const [nameSearch, setNameSearch] = useState('');
 
@@ -22,8 +40,10 @@ const Search = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
+        console.log(available)
 
         try {
+            localStorage.setItem('table_details', JSON.stringify(available))
             const response = await axios.get('http://localhost:8800/search_restaurants_time', {params: available} )
             console.log(response)
 
@@ -47,20 +67,42 @@ const Search = () => {
                 <h1 className="text-5xl font-bold text-center text-white mt-20 mx-auto">Find Your Table For Any Occasion</h1>
             </div>
             <div className="flex justify-center mt-2"> 
-                <input type="date" id="date" onChange={handleChange} name="date" className="w-auto h-14 bg-teal-100 rounded-l-xl px-4 py-4 text-lg hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1 border-0" />
+                <input type="date" id="date" onChange={handleChange} defaultValue={currentDate} min={currentDate} name="date" className="w-auto h-14 bg-teal-100 rounded-l-xl px-4 py-4 text-lg hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1 border-0"></input>
                 <select name="time" id="time" onChange={handleChange} className="w-auto h-14 bg-teal-100 text-base px-4 py-4 hover:shadow-md hover:shadow-teal-600 hover:bg-white duration-300 mr-1 mt-2.5">
                     <option disabled={true}>Select your time</option>
-                    <option value="10.30 AM">10:30 AM</option>
-                    <option value="12">12:00pm</option>
-                    <option value="4">4:00pm</option>
-                    <option value="6">6:00pm</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="10:30">10:30 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="11:30">11:30 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="12:30">12:30 PM</option>
+                    <option value="13:00">1:00 PM</option>
+                    <option value="13:30">1:30 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="14:30">2:30 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="15:30">3:30 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                    <option value="16:30">4:30 PM</option>
+                    <option value="17:00">5:00 PM</option>
+                    <option value="17:30">5:30 PM</option>
+                    <option value="18:00">6:00 PM</option>
+                    <option value="18:30">6:30 PM</option>
+                    <option value="19:00">7:00 PM</option>
+                    <option value="19:30">7:30 PM</option>
+                    <option value="20:00">8:00 PM</option>
+                    <option value="20:30">8:30 PM</option>
+                    <option value="21:00">9:00 PM</option>
                 </select>
                 <select name="count" id="count" onChange={handleChange} className="w-auto h-14 bg-teal-100 hover:bg-white text-base px-4 py-4 rounded-r-xl hover:shadow-md hover:shadow-teal-600 duration-300 mt-2.5">
                     <option disabled={true} className="">Person count</option>
-                    <option value="2">2 persons</option>
-                    <option value="4">4 persons</option>
-                    <option value="6">6 persons</option>
-                    <option value="8">8 persons</option>
+                    <option value="1">1 person</option>
+                    <option value="2">2 people</option>
+                    <option value="4">4 people</option>
+                    <option value="6">6 people</option>
+                    <option value="8">8 people</option>
+                    <option value="9">9 people</option>
+                    <option value="10">10 people</option>
                 </select>
                 <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300 border-0"  onChange={handleNameChange}></input>
                 <button className="ml-10 h-14 bg-teal-600 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-10 py-4 mt-2.5" onClick={handleClick} >Get started</button>

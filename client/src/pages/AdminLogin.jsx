@@ -13,12 +13,7 @@ import LoginHero from "../assets/LoginHero.jpg"
 const AdminLogin = () => {
 
     const navigate = useNavigate();
-    const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
-
-    useEffect(() => {
-        setSidebarActive(false)
-        setRestaurantSidebar(false)
-    }, [])
+    const { sidebarActive, setSidebarActive ,setRestaurantSidebar, setSession } = useStateContext();
 
     const schema = yup.object().shape({
         email: yup.string().email().required(),
@@ -33,7 +28,7 @@ const AdminLogin = () => {
         console.log(data)
 
         try {
-            const response = await axios.get("http://localhost:8800/admin_login", { params: data })
+            const response = await axios.post("http://localhost:8800/admin_login", data)
             console.log(response)
 
             if(response.data.data.status === "Inactive"){
@@ -51,7 +46,8 @@ const AdminLogin = () => {
             }
             else{
                 console.log(response.data.email)
-                localStorage.setItem('user', JSON.stringify(response.data.data.email))
+                sessionStorage.setItem('user', JSON.stringify(response.data.data.email))
+                setSession(sessionStorage.getItem('user'))
                 navigate('/admin_home', { state: response.data.data })
 
             }

@@ -2,8 +2,27 @@ import React from 'react'
 import NavBar from '../components/NavBar'
 import Taj from "../assets/taj.jpg"
 import Card from "../assets/visa&master.png"
+import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router'
+import Login from '../components/Login'
+import { useState } from 'react'
 
 const CustomerConfirmReservation = () => {
+
+  const [table, setTable] = useState({});
+  const [details, setDetails] = useState({});
+
+  const { state } = useLocation();
+
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    if(sessionStorage.getItem("user")){
+      setTable(JSON.parse(localStorage.getItem('table_details')));
+      setDetails(JSON.parse(sessionStorage.getItem('user')));
+    }
+  }, [])
+
   return (
     <div>
       <NavBar />
@@ -16,15 +35,15 @@ const CustomerConfirmReservation = () => {
             <img src={Taj} className="w-56 h-28 rounded-lg"></img>
             <div className="block ml-8">
               <h1 className="text-2xl font-bold text-gray-700">
-                Taj Samudra - The Restaurant
+                {state.Name}
               </h1>
               <h3 className="text-lg font-normal text-gray-400 mb-6">
-                Galle face center road - Colombo 08, Sri Lanka. 
+              {state.AddressLine1} {state.AddressLine2} {state.AddressLine3} 
               </h3>
               <div className="flex justify-between">
-                <h1 className="text-base text-gray-500 font-semibold">Dec 12th</h1>
-                <h1 className="text-base text-gray-500 font-semibold">6:00pm</h1><h1 className="text-base text-gray-500 font-semibold">7:00pm</h1>
-                <h1 className="text-base text-gray-500 font-semibold">4 Persons</h1>
+                <h1 className="text-base text-gray-500 font-semibold">{table.date}</h1>
+                <h1 className="text-base text-gray-500 font-semibold">{table.time}</h1><h1 className="text-base text-gray-500 font-semibold">7:00pm</h1>
+                <h1 className="text-base text-gray-500 font-semibold">{table.count} people</h1>
               </div>
             </div>
           </div>
@@ -37,8 +56,8 @@ const CustomerConfirmReservation = () => {
           </h1>
           <div className="flex justify-between">
             <div>
-              <input type="text" placeholder="First Name" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Tel. No" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+              <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
               <input type="text" placeholder="Card No." className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
               <div className="flex justify-between w-96">
                 <input type="text" placeholder="Expire Date" className="rounded-xl px-4 py-4 bg-teal-100 w-44 h-12"></input>
@@ -46,8 +65,8 @@ const CustomerConfirmReservation = () => {
               </div>
             </div>
             <div>
-              <input type="text" placeholder="last Name" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Email" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+              <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
               <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
               <img src={Card} className="w-36 h-14 mt-2"></img>
             </div>
