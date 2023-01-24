@@ -96,6 +96,36 @@ const UpdateRestaurant = () => {
             <input type="text" placeholder="Contact Number" defaultValue={restaurantData.ContactNumber} {...register("contactNumber")} />
             <p>{errors.contactNumber?.message}</p>
             
+            {/* <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
+            <p>{errors.cuisine?.message}</p> */}
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Cuisine & Working hours</h1>
+                <div className='flex justify-between '>
+                    <div>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
+                        <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
+                        <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
+                    </div>
+                    <div className='block'>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Operation hours</h1>
+                        <div className='flex justify-start space-x-2'>
+                            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                            <p className="ml-2 text-sm text-rose-600">{errors.open?.message}</p>
+                            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                            <p className="ml-2 text-sm text-rose-600">{errors.close?.message}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images & Location</h1>
+                <h1 className='text-base font-medium text-gray-400 mt-10'>Enter your images</h1>
+                {/* <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} /> */}
+                <h1 className='text-base font-medium text-gray-400 mt-10'>Search your restaurant loaaction on Google maps and copy the browser URL and paste here</h1>
+                <input type="text" placeholder="" defaultValue={restaurantData.Website} {...register("website")} className="w-[960px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
+            </div>
             <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
             <p>{errors.cuisine?.message}</p>
 

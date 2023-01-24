@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router'
 const Search = () => {
 
     const [available, setAvailable] = useState({
-        date: '12-12-2022',
-        time: '10.30 AM',
-        count: '2'
+        date: "",
+        time: '10.00',
+        count: '1'
     })
 
     const [nameSearch, setNameSearch] = useState('');

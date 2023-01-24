@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
+    "@stripe/react-stripe-js": "^1.16.4",
+    "@stripe/stripe-js": "^1.46.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -16,6 +18,7 @@
     "react-router": "^6.4.3",
     "react-router-dom": "^6.4.4",
     "react-scripts": "5.0.1",
+    "stripe": "^11.7.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
