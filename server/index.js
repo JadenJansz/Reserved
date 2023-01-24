@@ -130,6 +130,7 @@ app.get('/view_review_customer', (req, res) => {
 })
 
 app.get("/admin_login", (req, res) => {
+    const sql = `SELECT email,Role,status FROM user WHERE email = '${req.query.email}' AND password = '${req.query.password}' ` ;
     if(req.session.user){
         res.send({ loggedIn: true, user: req.session.user })
     }else{
@@ -161,7 +162,7 @@ app.post("/customer_login", (req, res) => {
 })
 
 app.post("/admin_login", (req, res) => {
-    const sql = `SELECT email,Role,status FROM user WHERE email = '${req.body.email}' AND password = '${req.body.password}' ` ;
+    const sql = `SELECT email,Role,status FROM user WHERE email = '${req.body.email}' AND password = '${req.body.password}' AND Role IN ('ResAdmin', 'Admin') ` ;
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
 
@@ -206,8 +207,11 @@ app.get("/admin_view_reataurants", (req, res) => {
 })
 
 app.get("/current_reservations", (req, res) => {
+    console.log(req.query)
 
-    const sql = "SELECT * FROM reservation WHERE Date >= CURRENT_DATE AND Time >= CURRENT_TIME"
+    const sql = `SELECT reservation.*, customer.FirstName, customer.LastName
+    FROM reservation, customer 
+    WHERE reservation.CustomerID = customer.CustomerID AND RestaurantID = ${req.query.id} AND Date >= CURRENT_DATE AND status = 'Active'`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
@@ -305,6 +309,24 @@ app.post("/create_review", (req, res) => {
     db.query(sql, [values], (err, data) => {
         if(err) return res.json(err);
         return res.json(data);
+    })
+})
+
+app.post("/add_reservation", (req, res) => {
+    // console.log(req.body);
+    const sql = `INSERT INTO reservation(RestaurantID, CustomerID, Date, Time, TableSize, status) VALUES (${req.body.restaurant}, ${req.body.data.CustomerID}, '${req.body.table.date}', '${req.body.table.time}', ${req.body.table.count}, 'Active')`;
+    
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+
+        if(data.affectedRows > 0){
+            const payment =`INSERT INTO payment(ReservationID, Amount) VALUES(${data.insertId}, "1000.00")`
+
+            db.query(payment, (err, data) => {
+                if(err) return res.json(err);
+                return res.json(data);
+            })
+        }
     })
 })
 
