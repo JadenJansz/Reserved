@@ -69,7 +69,7 @@ const ImageUploader = ({ id, data }) => {
         {
           existImages.length > 0 && (
             existImages.map((image) => (
-                <img src={`http://localhost:8800/${image}`} width={100} height={100} key={image} />
+                <img className='uploaderImg' src={`http://localhost:8800/${image}`} width={100} height={100} key={image} />
             ))
           )
         }
@@ -104,7 +104,7 @@ const ImageUploader = ({ id, data }) => {
             selectedImages.map((image, index) => {
               return (
                 <div key={image} className="image">
-                  <img src={image} height="150" width="150" alt="upload" />
+                  <img className='uploaderImg' src={image} height="150" width="150" alt="upload" />
                   <button onClick={() => deleteHandler(image)}>
                     Delete image
                   </button>

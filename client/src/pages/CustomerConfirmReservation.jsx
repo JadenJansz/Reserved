@@ -31,9 +31,9 @@ const CustomerConfirmReservation = () => {
           <h1 className="text-xl font-semibold text-black mb-6">
             First step completed ! Please fill the below details.
           </h1>
-          <div className="flex justify-between w-[700px]">
+          <div className="flex justify-start w-[700px]">
             <img src={Taj} className="w-56 h-28 rounded-lg"></img>
-            <div className="block ml-8">
+            <div className="block ml-10">
               <h1 className="text-2xl font-bold text-gray-700">
                 {state.Name}
               </h1>
