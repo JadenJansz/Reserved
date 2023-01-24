@@ -43,7 +43,7 @@ const NavBar = () => {
                 handleClose={togglePopup}
                 />}
                 <Link to='/sign_up'>
-                <button onClick={togglePopup} size={28} className="ml-6 h-10 bg-teal-100 text-gray-800 font-semibold hover:bg-teal-300 duration-300 rounded-xl px-6"> Sign Up </button>
+                <button size={28} className="ml-6 h-10 bg-teal-100 text-gray-800 font-semibold hover:bg-teal-300 duration-300 rounded-xl px-6"> Sign Up </button>
                 </Link>
             </div> 
 
