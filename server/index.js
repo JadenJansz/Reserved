@@ -1,4 +1,4 @@
-import express from "express"
+import express, { query } from "express"
 import mysql from "mysql"
 import cors from 'cors'
 import bodyParser from 'body-parser'
@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import session from 'express-session'
 import multer from 'multer'
 import path from "path"
+import e from "express"
 
 const app = express();
 
@@ -15,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null, 'Images')
     },
     filename: (req, file, cb) => {
-        console.log(file)
+        // console.log(file)
         cb(null, Date.now() + path.extname(file.originalname))
     }
 })
@@ -28,6 +29,7 @@ app.use(cors({
     credentials: true
 }));
 
+app.use(express.static('Images'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -84,8 +86,19 @@ app.get("/restaurants", (req, res) => {
 })
 
 app.get("/owner_view_restaurant", (req, res) => {
-    console.log(req.query)
     const sql = `SELECT* FROM restaurant WHERE RestaurantID = ${req.query.id}`;
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+
+        return res.json(data)
+    })
+})
+
+app.get("/check_availability", (req, res) => {
+
+    const sql = `SELECT * FROM reservation WHERE RestaurantID = ${req.query.id} AND Date LIKE '${req.query.table.date}' AND Time LIKE '${req.query.table.time}' `
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
@@ -106,10 +119,18 @@ app.get("/review", (req, res) => {
     })
 })
 
+app.get('/view_review_customer', (req, res) => {
+    const sql = `SELECT * FROM review WHERE RestaurantID = ${req.query.id}`
+    console.log(req.query.id)
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+        return res.json(data)
+    })
+})
+
 app.get("/admin_login", (req, res) => {
-<<<<<<< Updated upstream
     const sql = `SELECT email,Role,status FROM user WHERE email = '${req.query.email}' AND password = '${req.query.password}' ` ;
-=======
     if(req.session.user){
         res.send({ loggedIn: true, user: req.session.user })
     }else{
@@ -142,7 +163,6 @@ app.post("/customer_login", (req, res) => {
 
 app.post("/admin_login", (req, res) => {
     const sql = `SELECT email,Role,status FROM user WHERE email = '${req.body.email}' AND password = '${req.body.password}' AND Role IN ('ResAdmin', 'Admin') ` ;
->>>>>>> Stashed changes
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
 
@@ -151,6 +171,7 @@ app.post("/admin_login", (req, res) => {
             if(data[0].Role === "ResAdmin" && data[0].status === "Active"){
 
                 req.session.user = data
+                console.log(req.session.user)
                 const getRetaurantId = `SELECT RestaurantID from restaurant WHERE RestaurantAdminID = (SELECT RestaurantAdminID FROM restaurant_admin WHERE Email = '${data[0].email}')`
                 
                 db.query(getRetaurantId, (err,data) => {
@@ -228,15 +249,47 @@ app.post("/admin_create_restaurant", (req, res) => {
     })
 })
 
-app.post("/add_restaurant_details", upload.single("image"), (req, res) => {
+app.post("/add_restaurant_details", (req, res) => {
     // console.log(req.body)
-    console.log(req.file)
     const sql = `Insert into restaurant (Name, AddressLine1, AddressLine2, AddressLine3, ContactNumber, Cuisine, OpenTime, CloseTime, ParkingDetails, PaymentOption, Website, Facilities) VALUES ('${req.body.name}','${req.body.address1}', '${req.body.address2}', '${req.body.address3}', '${req.body.contactNumber}', '${req.body.cuisine}', '${req.body.open}', '${req.body.close}', '${req.body.parking}',  '${req.body.payment}',  '${req.body.website}',  '${req.body.facilities}')`;
     
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
         return res.json(data);
     })
+})
+
+app.post("/upload_images", upload.array("image"), (req, res) => {
+    // console.log(req.files)  
+
+    const arr = [];
+    req.files.map((obj, i) => {
+        arr.push(obj.filename)
+    })
+    console.log(arr)
+    const select = `SELECT * from restaurant WHERE RestaurantID = ${req.body.id}`
+
+    db.query(select, (err, data) => {
+        console.log(JSON.parse(data[0].Image))
+        if(JSON.parse(data[0].Image) !== null){
+            
+            const newArr = JSON.parse(data[0].Image).concat(arr)
+            console.log(newArr)
+            
+            const sql = `UPDATE restaurant SET Image = '${JSON.stringify(newArr)}' WHERE RestaurantID = ${req.body.id}`
+            db.query(sql, (err, data) => {
+                if(err) return res.json(err);
+                return res.json(data);
+            })
+        }else{
+            const sql = `UPDATE restaurant SET Image = '${JSON.stringify(arr)}' WHERE RestaurantID = ${req.body.id}`
+            db.query(sql, (err, data) => {
+                if(err) return res.json(err);
+                return res.json(data);
+            })
+        }
+    })
+
 })
 
 app.delete("/delete_restaurant/:id", (req, res) => {

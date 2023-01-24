@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, {useEffect} from 'react'
 import { useState } from 'react';
 import { useStateContext } from '../contextProviders/ContextProvider'
+import AdminNavBar from '../components/AdminNavBar'
+import NewReservationCard from '../components/NewReservationCard';
 
 const NewReservations = () => {
 

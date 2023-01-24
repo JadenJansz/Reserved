@@ -1,11 +1,8 @@
 import React from 'react'
 import { FaBars, FaTimes,FaFacebook, FaTwitter } from "react-icons/fa"
 import { useState } from "react";
-import { VscAccount } from 'react-icons/vsc'
 import Popup from './Login'
-import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
-import SignUp from './SignUp';
+import { Link, useNavigate } from 'react-router-dom'
 
 const NavBar = () => {
 
@@ -27,12 +24,12 @@ const NavBar = () => {
         {
             id: 1,
             links: 'home',
-            href: '#home'
+            href: '/'
         },
         {
             id: 2,
             links: 'business',
-            href: '#business'
+            href: '/admin_login'
         },
     ]
 
@@ -46,7 +43,7 @@ const NavBar = () => {
             <div className="flex mr-24 items-center"> 
                 <ul className="hidden md:flex">
                     {links.map(({ id, links, href}) =>(
-                    <a href={href}><li key={id} className="px-4 cursor-pointer capitalize font-semibold text-base text-black hover:scale-110 hover:text-teal-600 duration-300">{links}</li></a>  ))}
+                    <a href={href} key={id}><li className="px-4 cursor-pointer capitalize font-semibold text-base text-black hover:scale-110 hover:text-teal-600 duration-300">{links}</li></a>  ))}
                 </ul> 
                 { !sessionStorage.getItem('user') ? (
                     <>
@@ -74,7 +71,7 @@ const NavBar = () => {
                 {nav && (
                 <ul className="flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen dark-back">
                 {links.map(({ id, links, href}) =>(
-                    <a onClick={() => setNav(!nav)} href={href}><li key={id} className="px-4 cursor-pointer capitalize py-6 text-3xl font-light font-color1 hover:text-teal-400 hover:-rotate-6 hover:scale-110 duration-300">{links}</li></a>  ))}
+                    <Link to={href} key={id} ><li className="px-4 cursor-pointer capitalize py-6 text-3xl font-light font-color1 hover:text-teal-400 hover:-rotate-6 hover:scale-110 duration-300">{links}</li></Link>  ))}
                 </ul>
                 )}
         </div>

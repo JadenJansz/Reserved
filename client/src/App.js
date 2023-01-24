@@ -18,11 +18,13 @@ import { useStateContext } from './contextProviders/ContextProvider'
 import AdminAddRestaurant from './pages/AdminAddRestaurant'
 import AdminViewRestaurant from './pages/AdminViewRestaurant'
 import CustomerConfirmReservation from './pages/CustomerConfirmReservation'
+import CustomerCompleteReservation from './pages/CustomerCompleteReservation'
 import RestaurantHome from './pages/RestaurantHome'
 import NewReservations from './pages/NewReservations'
 import OldReservations from './pages/OldReservations'
 import { Axios } from 'axios'
 import UpdateRestaurant from './pages/UpdateRestaurant'
+import RestaurantSignUp from './pages/RestaurantSignUp'
 
 
 const App = () => {
@@ -46,6 +48,7 @@ const App = () => {
           <Route path='/search_restaurants' element={ <CustomerSearchRestaurants /> } />
           <Route path='/view_restaurant' element={<CustomerViewRestaurant />} />
           <Route path='/confirm_reservation' element={<CustomerConfirmReservation />} />
+          <Route path='/complete_reservation' element={<CustomerCompleteReservation />} />
 
           {/* Restaurant Pages */}
           <Route path='/restaurant_home' element={<RestaurantHome />} />
@@ -54,6 +57,7 @@ const App = () => {
           <Route path='/old_reservations' element={<OldReservations />} />
           <Route path='/review' element={ <ViewReview /> } />
           <Route path='/update_restaurant' element={<UpdateRestaurant /> } />
+          <Route path='/restaurant_signup' element={<RestaurantSignUp /> } />
 
           {/* Admin Pages */}
           <Route path='/admin_login' element={<AdminLogin />} />

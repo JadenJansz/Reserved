@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Join from "../assets/resjoin.jpg"
+import { Link, useNavigate } from 'react-router-dom'
 
 const ResJoin = () => {
   return (
@@ -14,7 +15,7 @@ const ResJoin = () => {
                 Join with us today to manage and complete <br/>
                 your reservations through Reserved.com<br/>
             </p>
-            <Link to='/'>
+            <Link to='/restaurant_signup'>
               <button className="absolute mx-auto w-60 left-0 right-0 top-80 h-14 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-10 py-4">Join with us</button>
             </Link>
             <img className="w-11/12 rounded-3xl h-full mt-10 mx-auto" src={Join} alt="" />

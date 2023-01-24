@@ -2,23 +2,174 @@ import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
+import NavBar from '../components/NavBar'
+import Taj from "../assets/taj.jpg"
+import Hilton from "../assets/hilton.jpg"
+import Iframe from 'react-iframe'
+import CustomerViewReview from '../components/CustomerViewReview';
+import { count, options } from '../data/selectData';
 
 const CustomerViewRestaurant = () => {
 
     const [restaurant, setRestaurant] = useState({});
+    const [reviews, setReviews] = useState([])
+    const [tableDetails, setTableDetails] = useState({})
 
     const { state } = useLocation();
+    const navigation = useNavigate(); 
     console.log(state);
+
+    const getReview = async () => {
+      try {
+        const response = await axios.get("http://localhost:8800/view_review_customer", { params: { id: state.RestaurantID } } )
+        setReviews(response.data)
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
     useEffect(() => {
-        
+        const table = JSON.parse(localStorage.getItem('table_details'))
+        // console.log(table)
+        setTableDetails(table)
         setRestaurant(state)
+        getReview()
     },[])
+
+    const handleChange = (e) => {
+      setTableDetails(prev => ({...prev, [e.target.name]: e.target.value }) )
+    }
+
+    // useEffect(() => {
+    //   console.log(tableDetails)
+    // }, [tableDetails])
+
+    const checkAvailability = async () => {
+      try {
+        localStorage.setItem('table_details', JSON.stringify(tableDetails))
+        const response = await axios.get("http://localhost:8800/check_availability", { params: { id: state.RestaurantID , table: tableDetails } } )
+        console.log(response.data)
+        
+        if(response.data.length === 0){
+
+          if(!sessionStorage.getItem('user')){
+            alert("please sign in before you proceed")
+          }
+          else{
+            navigation('/confirm_reservation',{ state: restaurant } )
+          }
+        }else{
+
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
     
   return (
     <div>
-        <h1>{restaurant.Name}</h1>
+      <NavBar />
+      {/* <h1>{restaurant.Name}</h1> */}
+      <div className="w-full h-80">
+        <img src={Taj} className="w-screen h-96"></img>
+      </div>
+      <div className="flex mt-28 mx-24 justify-between">
+        <div className="w-[850px] h-max pr-6">
+          <h1 className="text-4xl font-bold text-gray-800">{restaurant.Name}</h1>
+          <h2 className="text-lg text-gray-500 mt-2">{restaurant.AddressLine1} {restaurant.AddressLine2} {restaurant.AddressLine3}</h2>
+          <div className="flex justify-between my-8 pb-2 border-b-2 border-teal-500">
+            <h1 className="text-base text-gray-800 font-semibold">115 Reviews</h1>
+            <h1 className="text-base text-gray-800 font-semibold">Starting from $20</h1>
+            <h1 className="text-base text-gray-800 font-semibold">Multiple dining options</h1>
+          </div>
+          <h1 className="text-sm text-gray-800 font-normal">
+             Set on 4.5 hectares of lush gardens across from the Laccadive Sea, this upscale hotel is 2 km from 
+            Gangaramaya Temple and 5 km from the Port of Colombo.
+             Offering balconies with city or ocean views, the sophisticated rooms feature minibars, free Wi-Fi and flat-screen TVs, 
+             plus tea and coffeemaking facilities. Suites add living rooms and/or dining rooms. 
+             There is 24-hour room service. 
+              Breakfast is free. There are upscale Chinese, Indian and Japanese restaurants, plus a hip coffee shop and 2 
+            elegant lounges. Other amenities include an outdoor pool and tennis courts, plus a fitness centre and a 
+            business centre.</h1>
+            <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Photos</h1>
+            <div className="flex justify-center space-x-4 mt-8 mb-20">
+              <div>
+                <img src={Hilton} className="w-96 h-60 rounded-lg"></img>
+              </div>
+              <div>
+                <div className="flex justify-between mb-4">
+                  <img src={Hilton} className="w-48 h-28 mr-4 rounded-md"></img>
+                  <img src={Hilton} className="w-48 h-28 rounded-md"></img>
+                </div>
+                <div className="flex justify-between">
+                  <img src={Hilton} className="w-48 h-28 mr-4 rounded-md"></img>
+                  <img src={Hilton} className="w-48 h-28 rounded-md"></img>
+                </div>
+              </div>
+            </div>
+            <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Menu</h1>
+            <h1 className="text-sm text-gray-800 font-normal mt-6">
+              Seafood & Sri Lankan Buffet
+              Rs 2750++++. Extra charge will be levied for the following items: Live Crab, Jumbo Prawns, Lobster
+
+                Salad Bar
+                Soup
+                Fried Rice
+                Steamed Rice
+                Egg & Vegetable Noodles
+                Chicken Curry
+                Fish Curry
+                Mutton Curry
+                Cashew Curry & Vegetarian Dishes
+                Red & White String Hoppers
+                Raw & Seafood Buffet
+                including the following items: Modha, Seer, Mullet, Garoupa, Cuttlefish, Prawns, Crab etc.
+                Hoppers, Kottu & Roti Pittu
+                Dessert Buffet of Six Desserts
+                Fresh Fruits, Local Sweetmeats
+                Ice Cream
+                Curd With Treacle
+            </h1>
+            <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">What people are saying</h1>
+
+            {
+              reviews.map((review) => (
+                <CustomerViewReview key={review.ReviewID} review={review} />
+              ))
+            }
+        </div>
+        <div>
+          <div className="block w-[400px] border-2 border-teal-500 rounded-lg p-6 mb-8">
+            <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Make a reservation</h1>
+            <input type="date" id="date" name="date" defaultValue={tableDetails.date} onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 rounded-lg px-4 text-sm border-0" /><br />
+            <select name="time" id="time" onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 text-sm px-4 rounded-lg">
+                    <option disabled={true}>Select your time</option>
+                    {options.map((option) => (
+                      <option key={option.id} selected={tableDetails.time === option.value} value={option.value}>{option.label}</option>
+                    ))}
+            </select>
+            <select name="count" id="count" onChange={handleChange} className="w-full h-12 mb-8 bg-teal-100 text-sm px-4 rounded-lg">
+                    <option disabled={true} className="">Person count</option>
+                    {count.map((number) => (
+                      <option key={number.id} selected={tableDetails.count === number.value} value={number.value}>{number.label}</option>
+                    ))}
+            </select>
+            <button className="w-full h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6" onClick={checkAvailability}> Check Availability </button>
+          </div>
+          <div className="block w-[400px] border-2 border-teal-500 rounded-lg py-6">
+            <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Location</h1>
+            <Iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15842.926893021824!2d79.8467957!3d6.9226396!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2a84fafa80297e3f!2sTaj%20Samudra%2C%20Colombo!5e0!3m2!1sen!2slk!4v1673443162058!5m2!1sen!2slk" 
+            className="w-[396px] h-72"></Iframe>
+            <h1 className="text-base font-semibold text-gray-700 mt-4 px-10 text-center">25, Galle Face center road, Colombo 8000</h1>
+          </div>
+        </div>
+        <div>
+
+        </div>
+      </div>
     </div>
   )
 }
