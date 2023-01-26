@@ -3,6 +3,7 @@ import { useStateContext } from '../contextProviders/ContextProvider'
 import AdminNavBar from '../components/AdminNavBar'
 import ResHero from "../assets/ResHero.jpg"
 import ResSecond from "../assets/ResSecond.jpg"
+import { Link } from 'react-router-dom'
 
 const RestaurantHome = () => {
 
@@ -23,7 +24,9 @@ const RestaurantHome = () => {
           images and details to help<br/>
           customers in their reservations<br/>
         </h2>
-        <button className="absolute w-60 left-24 right-0 top-44 h-12 bg-teal-100 text-gray-700 font-semibold hover:bg-teal-300 duration-300 rounded-lg px-10">Update profile</button>
+        <Link to='/update_restaurant'>
+          <button className="absolute w-60 left-24 right-0 top-44 h-12 bg-teal-100 text-gray-700 font-semibold hover:bg-teal-300 duration-300 rounded-lg px-10">Update profile</button>
+        </Link>
         <div className="flex justify-center space-x-16 mt-10">
           <div className="block">
             <h1 className='text-2xl font-medium text-gray-700 mt-2 mb-6'>Recent reviews</h1>
@@ -47,7 +50,9 @@ const RestaurantHome = () => {
                 </p>
               </div>
               <div className="flex justify-between space-x-4 mt-2">
-                <button className="w-20 h-12 bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">View</button>
+                <Link to='/review'>
+                  <button className="w-20 h-12 bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">View</button>
+                </Link>
                 <button className="w-20 h-12 bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2">Dismiss</button>
               </div>
             </div>

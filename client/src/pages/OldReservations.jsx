@@ -9,16 +9,24 @@ const OldReservations = () => {
 
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
     const [reservations, setReservations] = useState([]);
+    const [restaurantId, setRestaurantId] = useState({});
 
     useEffect(() => {
         setSidebarActive(true)
         setRestaurantSidebar(true)
-    }, [])
+        setRestaurantId(JSON.parse(localStorage.getItem('user')).RestaurantID)
+      }, [])
+      
+    useEffect(() => {
+        
+        getReservations();
+    }, [restaurantId])
 
     const getReservations = async () => {
       try {
-        const response = await axios.get("http://localhost:8800/current_reservations")
+        const response = await axios.get("http://localhost:8800/past_reservations", { params: {id: restaurantId}})
         setReservations(response.data)
+        console.log(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -33,7 +41,15 @@ const OldReservations = () => {
         <button className="w-28 h-10 text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2 ml-4 mt-2">Search</button>
       </div>
       <div className='border-2 border-teal-500 rounded-2xl mx-16 h-max mt-2'>
-        <OldReservationCard />
+        {
+          reservations.length > 0 && (
+
+            reservations.map((reservation) => (
+              <OldReservationCard key={reservation.ReservationID} reservation={reservation} />
+  
+            ))
+          )
+        }
       </div>
     </div>
   )
