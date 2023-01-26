@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useStateContext } from '../contextProviders/ContextProvider'
 import AdminNavBar from '../components/AdminNavBar'
 import Taj from "../assets/taj.jpg"
@@ -12,16 +12,23 @@ import Popup from '../components/Warning'
 const AdminViewRestaurant = () => {
 
   const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
+  const [images, setImages] = useState([])
   const { state } = useLocation();
+  const navigation = useNavigate();
 
     useEffect(() => {
         setSidebarActive(true)
         setRestaurantSidebar(false)
+        setImages(JSON.parse(state.Image))
     }, [])
 
   const removeData = async (id) => {
    try {
-    await axios.delete('http://localhost:8800/delete_restaurant/'+id);
+    const response = await axios.delete('http://localhost:8800/delete_restaurant/'+id);
+    console.log(response);
+
+    navigation('/admin_view_restaurants')
+
    } catch (error) {
     console.log(error);
    } 
@@ -65,11 +72,12 @@ const AdminViewRestaurant = () => {
         </div>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Photos</h1>
             <div className="flex justify-center space-x-2 mt-8 mb-20">
-                  <img src={Hilton} className="w-48 h-36 rounded-md"/>
-                  <img src={Hilton} className="w-48 h-36 rounded-md"/>
-                  <img src={Hilton} className="w-48 h-36 rounded-md"/>
-                  <img src={Hilton} className="w-48 h-36 rounded-md"/>
-                  <img src={Hilton} className="w-48 h-36 rounded-md"/>
+              {
+                images.map((image) => (
+                  <img className="w-48 h-36 rounded-md" src={`http://localhost:8800/${image}`} alt='image' width={100} height={100} />
+
+                ))
+              }
             </div>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Menu</h1>
             <h1 className="text-sm text-gray-800 font-normal mt-6">
@@ -102,9 +110,9 @@ const AdminViewRestaurant = () => {
           content={<>
             <div className="">
               <h1 className="text-3xl font-bold mb-8 text-center">Warning !</h1>
-              <h1 className="text-base text-gray-700 font-semibold mt-8 text-center mx-4">Are you sure about removing this restaurant from the system ? This cannot be undone after proceed !</h1>
+              <h1 className="text-base text-gray-700 font-semibold mt-8 text-center mx-4">Are you sure about removing this restaurant from the system ? This cannot be undone if proceeded !</h1>
               <div className="flex justify-center space-x-6 mt-10 mb-4">
-                <button className="w-48 h-12 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2">Yes, Remove</button>
+                <button className="w-48 h-12 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2" onClick={() => removeData(state.RestaurantID)}>Yes, Remove</button>
                 <button className="w-48 h-12 text-sm bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2" onClick={togglePopup}>Cancel process</button>
             </div>                
             </div>

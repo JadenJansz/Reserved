@@ -15,10 +15,10 @@ const NewReservations = () => {
     useEffect(() => {
         setSidebarActive(true)
         setRestaurantSidebar(true)
-        setRestaurantId(JSON.parse(localStorage.getItem('user')))
+        setRestaurantId(JSON.parse(localStorage.getItem('user')).RestaurantID)
       }, [])
       
-      useEffect(() => {
+    useEffect(() => {
         
         getReservations();
     }, [restaurantId])
@@ -47,7 +47,7 @@ const NewReservations = () => {
           reservations.length > 0 && (
             reservations.map((reservation) => (
               
-              <NewReservationCard key={reservation.ResrvationID} reservation={reservation} />
+              <NewReservationCard key={reservation.ReservationID} reservation={reservation} getReservations={getReservations} />
             ))
           )
         }

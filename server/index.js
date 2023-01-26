@@ -25,7 +25,7 @@ const upload = multer({ storage: storage })
 
 app.use(cors({
     origin: ('http://localhost:3000'),
-    methods: ('GET', 'POST'),
+    methods: ('GET', 'POST', 'PUT', 'DELETE'),
     credentials: true
 }));
 
@@ -121,7 +121,7 @@ app.get("/review", (req, res) => {
 
 app.get('/view_review_customer', (req, res) => {
     const sql = `SELECT * FROM review WHERE RestaurantID = ${req.query.id}`
-    console.log(req.query.id)
+    // console.log(req.query.id)
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
 
@@ -171,8 +171,10 @@ app.post("/admin_login", (req, res) => {
             if(data[0].Role === "ResAdmin" && data[0].status === "Active"){
 
                 req.session.user = data
-                console.log(req.session.user)
-                const getRetaurantId = `SELECT RestaurantID from restaurant WHERE RestaurantAdminID = (SELECT RestaurantAdminID FROM restaurant_admin WHERE Email = '${data[0].email}')`
+                // console.log(req.session.user)
+                const getRetaurantId = `SELECT RestaurantID, restaurant_admin.* 
+                FROM restaurant, restaurant_admin 
+                WHERE restaurant.RestaurantAdminID = restaurant_admin.RestaurantAdminID AND Email = '${data[0].email}'`
                 
                 db.query(getRetaurantId, (err,data) => {
                     if(err) return res.json(err)
@@ -207,7 +209,7 @@ app.get("/admin_view_reataurants", (req, res) => {
 })
 
 app.get("/current_reservations", (req, res) => {
-    console.log(req.query)
+    // console.log(req.query)
 
     const sql = `SELECT reservation.*, customer.FirstName, customer.LastName
     FROM reservation, customer 
@@ -221,7 +223,9 @@ app.get("/current_reservations", (req, res) => {
 
 app.get("/past_reservations", (req, res) => {
 
-    const sql = "SELECT * FROM reservation WHERE Date <= CURRENT_DATE AND Time <= CURRENT_TIME"
+    const sql = `SELECT reservation.*, customer.FirstName, customer.LastName
+    FROM reservation, customer 
+    WHERE reservation.CustomerID = customer.CustomerID AND RestaurantID = ${req.query.id} AND status = 'Cancelled'`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
@@ -241,7 +245,7 @@ app.post("/create_customer", (req, res) => {
 app.post("/admin_create_restaurant", (req, res) => {
 
     const random = Math.floor(Math.random() * (1000000 - 100000) + 100000);
-    const sql = `INSERT INTO user(Role, Email, Password,status) VALUES ('ResAdmin', '${req.body.email}', '${random}', 'Inactive') `
+    const sql = `INSERT INTO user(Role, Email, Password,status) VALUES ('ResAdmin', '${req.body.email}', '${req.body.password}', 'Inactive') `
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
@@ -293,7 +297,8 @@ app.post("/upload_images", upload.array("image"), (req, res) => {
 })
 
 app.delete("/delete_restaurant/:id", (req, res) => {
-    const sql = `DELETE FROM restaurants WHERE RestaurantID = ${req.params.id}`
+    console.log(req.params.id)
+    const sql = `DELETE FROM restaurant WHERE RestaurantID = ${req.params.id}`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
@@ -327,6 +332,16 @@ app.post("/add_reservation", (req, res) => {
                 return res.json(data);
             })
         }
+    })
+})
+
+app.put("/end_reservation/:id", (req, res) => {
+    
+    const sql = `UPDATE reservation SET status = 'Cancelled' WHERE ReservationID = ${req.params.id}`
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
     })
 })
 

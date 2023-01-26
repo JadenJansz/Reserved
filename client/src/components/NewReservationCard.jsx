@@ -1,6 +1,23 @@
+import axios from 'axios';
 import React from 'react'
 
-const NewReservationCard = ({ reservation }) => {
+const NewReservationCard = ({ reservation, getReservations }) => {
+
+  const endReservation = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.put("http://localhost:8800/end_reservation/"+reservation.ReservationID)  
+      console.log(response.data);
+
+      if(response.data.changedRows > 0){
+        getReservations();
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className='m-4 bg-teal-100 rounded-xl'>
           <div className='flex ml-10 pt-4'> 
@@ -33,7 +50,7 @@ const NewReservationCard = ({ reservation }) => {
               <h1 className='text-base font-semibold text-gray-700 ml-2'>7:00pm</h1>
             </div>
           </div>
-          <button className="w-48 h-10 ml-[410px] text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2 mt-6 mb-4">End reservation</button>
+          <button onClick={endReservation} className="w-48 h-10 ml-[410px] text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2 mt-6 mb-4">End reservation</button>
         </div>
   )
 }
