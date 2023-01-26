@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router'
+<<<<<<< Updated upstream
 import { FaStar } from "react-icons/fa"
 import Hilton from "../assets/hilton.jpg"
+=======
+import Hilton from "../assets/hilton.jpg"
+import { FaStar } from "react-icons/fa"
+>>>>>>> Stashed changes
 
 const RestaurantCard = ({ restaurant }) => {
 
