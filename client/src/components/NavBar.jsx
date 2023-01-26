@@ -34,7 +34,7 @@ const NavBar = () => {
     ]
 
     return (
-        <div className="fixed flex justify-between items-center bg-white font-base1 w-full h-10 sm:h-16 px-4 py-4  z-10"> 
+        <div className="fixed flex justify-between items-center bg-white font-base1 w-screen h-10 sm:h-16 px-4 py-4  z-10"> 
             <div className="flex">
                 {/* <img src={logo} alt="my logo" className="w-5 h-6 sm:ml-24 mt-1"/> */}
                 <h1 className="text-lg font-bold sm:text-2xl font-logo lg:ml-24 text-black">Reserved</h1>
