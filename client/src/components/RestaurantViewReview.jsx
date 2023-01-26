@@ -12,7 +12,7 @@ const RestaurantViewReview = ({ review }) => {
         </div>
         <div className='flex'> 
           <h1 className='text-sm font-medium text-gray-700 mb-2 mt-0.5'>Date:</h1>
-          <h1 className='text-base font-semibold text-gray-700 mb-2 ml-2'>15-01-2023</h1>
+          <h1 className='text-base font-semibold text-gray-700 mb-2 ml-2'>{review.Date.substring(0,10)}</h1>
         </div>
         <div className='flex'> 
           <h1 className='text-sm font-medium text-gray-700 mb-2 mt-0.5 mr-1'>Rating:</h1>
@@ -23,12 +23,10 @@ const RestaurantViewReview = ({ review }) => {
           <FaStar size={20} className="text-yellow-400 ml-1"/>
         </div>
       </div>
-      <div className='flex px-8 pt-2'>
+      <div className='block px-8 pt-2'>
           <h1 className='text-sm font-medium text-gray-700 mt-0.5'>Message:</h1>
-          <h1 className='text-base font-semibold text-gray-700 ml-2'>
-              First night in Colombo so ate in The Taj Samudra as it was raining heavily. 
-              Meal was cheap by western standards but expensive by local. 
-              Food was good not great. Good buffet option with fish and crab cooked to order.
+          <h1 className='text-base font-semibold text-gray-700 '>
+              {review.Comment}
           </h1>
       </div>
     </div>

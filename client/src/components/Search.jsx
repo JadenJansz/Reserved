@@ -12,7 +12,7 @@ const Search = () => {
     const [available, setAvailable] = useState({
         date: "",
         time: '10.00',
-        count: '2'
+        count: '1'
     })
 
     const [currentDate, setCurrentDate] = useState('');

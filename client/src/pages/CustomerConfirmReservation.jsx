@@ -6,6 +6,11 @@ import { useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import Login from '../components/Login'
 import { useState } from 'react'
+import { Elements, CardElement, ElementsConsumer, PaymentElement } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios'
+
+const stripePromise = loadStripe("pk_test_51KZK2DFNOU5H46UrKf02FBa0eXC89r5zWl9rBcrbKHlKq5Jbr7Vkp9koQQLmBdVj3I8LS5feDQfXvy3V3ZeZThKY004LY3W8jd")
 
 const CustomerConfirmReservation = () => {
 
@@ -23,6 +28,35 @@ const CustomerConfirmReservation = () => {
     }
   }, [])
 
+  const handleSubmit = async (event, elements, stripe) => {
+    event.preventDefault();
+
+    if(!stripe || !elements) return;
+
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod} = await stripe.createPaymentMethod({ type:'card', card: cardElement })
+
+      if(error){
+        console.log(error);
+      }
+      else{
+          try {
+            const response = await axios.post('http://localhost:8800/add_reservation', { data: details, table: table, restaurant: state.RestaurantID });
+            console.log(response)
+
+            if(response.data.affectedRows > 0){
+              navigation('/complete_reservation')
+            }
+            else{
+              alert(response)
+            }
+          } catch (err) {
+            console.log(err)
+          }
+      }
+  }
+
   return (
     <div>
       <NavBar />
@@ -31,9 +65,9 @@ const CustomerConfirmReservation = () => {
           <h1 className="text-xl font-semibold text-black mb-6">
             First step completed ! Please fill the below details.
           </h1>
-          <div className="flex justify-start w-[700px]">
+          <div className="flex justify-between w-[700px]">
             <img src={Taj} className="w-56 h-28 rounded-lg"></img>
-            <div className="block ml-10">
+            <div className="block ml-8">
               <h1 className="text-2xl font-bold text-gray-700">
                 {state.Name}
               </h1>
@@ -54,25 +88,30 @@ const CustomerConfirmReservation = () => {
           <h1 className="text-lg font-bold text-gray-700">
             Sign in before filling the reservation details.
           </h1>
-          <div className="flex justify-between">
-            <div>
-              <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Card No." className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <div className="flex justify-between w-96">
-                <input type="text" placeholder="Expire Date" className="rounded-xl px-4 py-4 bg-teal-100 w-44 h-12"></input>
-                <input type="text" placeholder="CCV" className="rounded-xl px-4 py-4 bg-teal-100 w-44 h-12"></input>
+            <div className="flex justify-between">
+              <div>
+                <Elements stripe={stripePromise}>
+                  <ElementsConsumer>
+                  {({ elements, stripe }) => (
+                          <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
+                            <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                            <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                            <div>
+                              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <img src={Card} className="w-36 h-14 mt-2"></img>
+                            </div>
+                              <CardElement options={{width: '100px'}}/>
+                              <button className="w-96 h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6 ml-52 mt-10"> Confirm reservation </button>
+                          </form>
+                      )}
+                  </ElementsConsumer>
+                </Elements>
+
               </div>
             </div>
-            <div>
-              <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-              <img src={Card} className="w-36 h-14 mt-2"></img>
-            </div>
-          </div>
-          <button className="w-96 h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6 ml-52 mt-10"> Confirm reservation </button>
-          <h1 className="text-xs font-normal text-teal-500 mt-6">By clicking “Confirm reservation“ you agree to the Reserved.com Terms & Conditions and Privacy Policy. Please read before confirmation.</h1>
+            <h1 className="text-xs font-normal text-teal-500 mt-6">By clicking “Confirm reservation“ you agree to the Reserved.com Terms & Conditions and Privacy Policy. Please read before confirmation.</h1>
         </div>
         <div className="ml-10 mt-14">
         <h1 className="text-xl font-bold text-gray-700 mb-8">
