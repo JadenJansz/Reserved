@@ -3,20 +3,23 @@ import NavBar from "../components/NavBar";
 import Confirm from "../components/Confirmation";
 import Taj from "../assets/taj.jpg"
 import Iframe from 'react-iframe'
+import { useLocation } from 'react-router';
 
 const CustomerCompleteReservation = () => {
+
+    const { state } = useLocation();
   return (
     <div>
         <NavBar />
         <Confirm />
         <div className="w-[600px] shadow-xl rounded-2xl ml-[450px] mt-6">
             <img src={Taj} className="w-[600px] h-52 rounded-t-xl"></img>
-            <h1 className="text-2xl font-semibold text-gray-700 mx-8 mt-4">Taj Samudra - The Restaurant</h1>
-            <h1 className="text-base font-normal text-gray-400 mb-2 mx-8">Galle face center road - Colombo 08, Sri Lanka.</h1>
+            <h1 className="text-2xl font-semibold text-gray-700 mx-8 mt-4">{state.restaurant.Name}</h1>
+            <h1 className="text-base font-normal text-gray-400 mb-2 mx-8">{state.restaurant.AddressLine1} {state.restaurant.AddressLine2} {state.restaurant.AddressLine3}</h1>
             <div className="flex justify-between mx-8">
-                <h1 className="text-base text-gray-500 font-semibold">Dec 12th</h1>
-                <h1 className="text-base text-gray-500 font-semibold">6:00pm</h1><h1 className="text-base text-gray-500 font-semibold">7:00pm</h1>
-                <h1 className="text-base text-gray-500 font-semibold">4 Persons</h1> 
+                <h1 className="text-base text-gray-500 font-semibold">{state.table.date}</h1>
+                <h1 className="text-base text-gray-500 font-semibold">{state.table.time} AM</h1>
+                <h1 className="text-base text-gray-500 font-semibold">{state.table.count} Persons</h1> 
             </div>
             <div className="flex justify-start mx-8 mt-4">
                 {/* <Iframe url="https://goo.gl/maps/zxPaJroK8Aaq6iyc7" className="w-40 h-24 rounded-lg"/> */}

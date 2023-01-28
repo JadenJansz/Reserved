@@ -49,7 +49,7 @@ const CustomerConfirmReservation = () => {
             console.log(response)
 
             if(response.data.affectedRows > 0){
-              navigation('/complete_reservation')
+              navigation('/complete_reservation', { state : { table: table,  restaurant: state }})
 
               emailjs.sendForm('service_t7uab8a', 'template_4gewh6p', form.current, 'WxqAsIdocDRfM1kpI')
                 .then((result) => {

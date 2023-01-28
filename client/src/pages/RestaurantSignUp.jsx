@@ -17,6 +17,11 @@ const RestaurantSignUp = () => {
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar, setSession } = useStateContext();
     const form = useRef();
 
+    useEffect(() => {
+        setSidebarActive(false)
+        setRestaurantSidebar(false)
+      }, [])
+
     const schema = yup.object().shape({
         name: yup.string().required(),
         email: yup.string().email().required(),
