@@ -23,11 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-app.use(cors({
-    origin: ('http://localhost:3000'),
-    methods: ('GET', 'POST', 'PUT', 'DELETE'),
-    credentials: true
-}));
+app.use(cors());
 
 app.use(express.static('Images'));
 app.use(cookieParser());
@@ -336,7 +332,7 @@ app.post("/add_reservation", (req, res) => {
 })
 
 app.put("/end_reservation/:id", (req, res) => {
-    
+    console.log(req.params.id)
     const sql = `UPDATE reservation SET status = 'Cancelled' WHERE ReservationID = ${req.params.id}`
 
     db.query(sql, (err, data) => {
