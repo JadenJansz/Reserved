@@ -9,6 +9,8 @@ import { useState } from 'react'
 import { Elements, CardElement, ElementsConsumer, PaymentElement } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios'
+import emailjs from '@emailjs/browser';
+import { useRef } from 'react'
 
 const stripePromise = loadStripe("pk_test_51KZK2DFNOU5H46UrKf02FBa0eXC89r5zWl9rBcrbKHlKq5Jbr7Vkp9koQQLmBdVj3I8LS5feDQfXvy3V3ZeZThKY004LY3W8jd")
 
@@ -18,6 +20,7 @@ const CustomerConfirmReservation = () => {
   const [details, setDetails] = useState({});
 
   const { state } = useLocation();
+  const form = useRef();
 
   const navigation = useNavigate();
 
@@ -46,7 +49,14 @@ const CustomerConfirmReservation = () => {
             console.log(response)
 
             if(response.data.affectedRows > 0){
-              navigation('/complete_reservation')
+              navigation('/complete_reservation', { state : { table: table,  restaurant: state }})
+
+              emailjs.sendForm('service_t7uab8a', 'template_4gewh6p', form.current, 'WxqAsIdocDRfM1kpI')
+                .then((result) => {
+                    console.log(result.text);
+                }, (error) => {
+                    console.log(error.text);
+                });
             }
             else{
               alert(response)
@@ -93,13 +103,13 @@ const CustomerConfirmReservation = () => {
                 <Elements stripe={stripePromise}>
                   <ElementsConsumer>
                   {({ elements, stripe }) => (
-                          <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-                            <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
-                            <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 ml-6 border-0"></input>
+                          <form ref={form} onSubmit={(e) => handleSubmit(e, elements, stripe)}>
+                            <input type="text" placeholder="First Name" name='firstName' defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                            <input type="text" placeholder="last Name" name='lastName' defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
                             <div>
-                              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
-                              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 ml-6 border-0"></input>
-                              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
+                              <input type="text" placeholder="Tel. No" name='contact' defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <input type="text" placeholder="Email" name='email' defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
                               <img src={Card} className="w-36 h-14 mt-2"></img>
                             </div>
                               <CardElement options={{width: '100px'}}/>

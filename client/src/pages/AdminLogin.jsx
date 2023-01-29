@@ -15,6 +15,10 @@ const AdminLogin = () => {
     const navigate = useNavigate();
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar, setSession } = useStateContext();
 
+    useEffect(() => {
+        setSidebarActive(false);
+    }, [])
+
     const schema = yup.object().shape({
         email: yup.string().email().required(),
         password: yup.string().required()
@@ -41,11 +45,12 @@ const AdminLogin = () => {
             }
             if(response.data.role === "ResAdmin"){
                 console.log(response)
-                localStorage.setItem('user', JSON.stringify(response.data.data.RestaurantID))
+                localStorage.setItem('user', JSON.stringify(response.data.data))
                 navigate('/restaurant_home', { state: response.data.data.email })
             }
             else{
                 console.log(response.data.email)
+                localStorage.setItem('user', JSON.stringify(response.data.data))
                 sessionStorage.setItem('user', JSON.stringify(response.data.data.email))
                 setSession(sessionStorage.getItem('user'))
                 navigate('/admin_home', { state: response.data.data })

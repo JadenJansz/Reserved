@@ -16,11 +16,11 @@ const UpdateRestaurant = () => {
     
     
     const retrieveRestaurant = async () => {
-        const id = localStorage.getItem('user')
+        const id = JSON.parse(localStorage.getItem('user')).RestaurantID
         
         try {
             const response = await axios.get("http://localhost:8800/owner_view_restaurant", { params : {id: id} })
-            console.log(response)
+            console.log(response.data[0].OpenTime + ":00")
             
             setRestaurantData(response.data[0])
         } catch (error) {
@@ -34,9 +34,9 @@ const UpdateRestaurant = () => {
         retrieveRestaurant()
     }, [])
 
-    useEffect(() => {
-        console.log(restaurantData)
-    }, [restaurantData])
+    // useEffect(() => {
+    //     console.log(restaurantData)
+    // }, [restaurantData])
 
     const schema = yup.object().shape({
         name: yup.string().required("Name is required"),
@@ -66,10 +66,10 @@ const UpdateRestaurant = () => {
         resolver: yupResolver(schema)
     });
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        console.log(restaurantData)
-    }, [setRestaurantData])
+    //     console.log(restaurantData)
+    // }, [setRestaurantData])
 
     const onSubmit = async (data) => {
         console.log(data)
@@ -97,11 +97,11 @@ const UpdateRestaurant = () => {
                     <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.name?.message}</p>
                 </div>
-                <div className='block'>
+                {/* <div className='block'>
                     <h1 className='text-base font-medium text-gray-400 mt-4'>Secondary name</h1>
                     <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.name?.message}</p>
-                </div>
+                </div> */}
             </div>
             <div className='flex justify-start space-x-8 mt-4'>
                 <div className='block'>
@@ -129,10 +129,10 @@ const UpdateRestaurant = () => {
             {/* <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
             <p>{errors.cuisine?.message}</p> */}
             <div className='border-t-2 border-teal-500 pb-8'>
-                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Cuisine & Working hours</h1>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Menu & Working hours</h1>
                 <div className='flex justify-between '>
                     <div>
-                        <h1 className='text-base font-medium text-gray-400 mt-10'>Menu document</h1>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
                         <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
                     </div>

@@ -69,7 +69,7 @@ const ImageUploader = ({ id, data }) => {
         {
           existImages.length > 0 && (
             existImages.map((image) => (
-                <img className='uploaderImg' src={`http://localhost:8800/${image}`} width={100} height={100} key={image} />
+                <img className='uploaderImg' src={`http://localhost:8800/${image}`} alt='image' width={100} height={100} key={image} />
             ))
           )
         }

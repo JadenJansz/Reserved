@@ -13,10 +13,10 @@ const RestaurantCard = ({ restaurant }) => {
   }
 
   return (
-    <div className='w-full py-10 border-b-2 border-teal-100' onClick={handleClick}>
+    <div className='w-full py-10 border-b-2 border-teal-100' >
       <div className='flex justify-start space-x-10 pl-10'>
         <div>
-        <img src={Hilton} className="w-72 h-max rounded-lg"></img>
+        <img src={`http://localhost:8800/${JSON.parse(restaurant.Image) ? JSON.parse(restaurant.Image)[0] : 'placeholder.jpg'}`} className="w-72 h-max rounded-lg"></img>
         </div>
         <div>
           <h3 className='text-2xl text-gray-700 font-semibold'>{restaurant.Name}</h3>

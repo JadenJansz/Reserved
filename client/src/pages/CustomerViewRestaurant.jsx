@@ -74,7 +74,7 @@ const CustomerViewRestaurant = () => {
       <NavBar />
       {/* <h1>{restaurant.Name}</h1> */}
       <div className="w-full h-80">
-        <img src={Taj} className="w-screen h-96"></img>
+        <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[0] : 'placeholder.jpg'}`} className="w-screen h-96"></img>
       </div>
       <div className="flex mt-28 mx-24 justify-between">
         <div className="w-[850px] h-max pr-6">
