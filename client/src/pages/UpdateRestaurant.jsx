@@ -132,7 +132,7 @@ const UpdateRestaurant = () => {
                 <h1 className='text-2xl font-medium text-gray-700 mt-10'>Menu & Working hours</h1>
                 <div className='flex justify-between '>
                     <div>
-                        <h1 className='text-base font-medium text-gray-400 mt-10'>Menu</h1>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
                         <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
                     </div>

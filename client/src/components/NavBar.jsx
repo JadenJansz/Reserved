@@ -54,8 +54,8 @@ const NavBar = () => {
                     </>
                     ) : (
                         <div className="flex justify-between">
-                            <img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' className="w-12 h-12 rounded-full mt-2 ml-48"></img>
-                            <div className="block mt-4 ml-4">
+                            <img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' className="w-12 h-12 rounded-full ml-6"></img>
+                            <div className="block mt-1 ml-4">
                                 <h1 className="text-sm font-semibold text-gray-700 capitalize">{(JSON.parse(sessionStorage.getItem('user'))).FirstName + " " + (JSON.parse(sessionStorage.getItem('user'))).LastName}</h1>
                                 <h1 className="text-xs font-normal text-gray-400">{(JSON.parse(sessionStorage.getItem('user'))).Email}</h1>
                             </div>
