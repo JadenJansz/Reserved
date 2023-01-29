@@ -65,9 +65,9 @@ const CustomerConfirmReservation = () => {
           <h1 className="text-xl font-semibold text-black mb-6">
             First step completed ! Please fill the below details.
           </h1>
-          <div className="flex justify-between w-[700px]">
+          <div className="flex justify-start w-[700px]">
             <img src={Taj} className="w-56 h-28 rounded-lg"></img>
-            <div className="block ml-8">
+            <div className="block ml-12">
               <h1 className="text-2xl font-bold text-gray-700">
                 {state.Name}
               </h1>
@@ -88,18 +88,18 @@ const CustomerConfirmReservation = () => {
           <h1 className="text-lg font-bold text-gray-700">
             Sign in before filling the reservation details.
           </h1>
-            <div className="flex justify-between">
+            <div className="flex justify-between space-x-4">
               <div>
                 <Elements stripe={stripePromise}>
                   <ElementsConsumer>
                   {({ elements, stripe }) => (
                           <form onSubmit={(e) => handleSubmit(e, elements, stripe)}>
-                            <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-                            <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                            <input type="text" placeholder="First Name" defaultValue={details.FirstName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
+                            <input type="text" placeholder="last Name" defaultValue={details.LastName} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 ml-6 border-0"></input>
                             <div>
-                              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-                              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
-                              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
+                              <input type="text" placeholder="Tel. No" defaultValue={details.ContactNumber} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
+                              <input type="text" placeholder="Email" defaultValue={details.Email} className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 ml-6 border-0"></input>
+                              <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12 border-0"></input>
                               <img src={Card} className="w-36 h-14 mt-2"></img>
                             </div>
                               <CardElement options={{width: '100px'}}/>
