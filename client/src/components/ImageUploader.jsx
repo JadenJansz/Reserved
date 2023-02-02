@@ -56,6 +56,7 @@ const ImageUploader = ({ id, data }) => {
       try {
         const response = await axios.post("http://localhost:8800/upload_images", formData, { headers: {'Content-Type': 'multipart/form-data'}});
         console.log(response)
+        window.location.reload();
       } catch (error) {
         console.log(error)
       }
@@ -73,7 +74,7 @@ const ImageUploader = ({ id, data }) => {
             ))
           )
         }
-        <form onSubmit={uploadImage} >
+        {/* <form onSubmit={uploadImage} > */}
         <label>
           + Add Images
           <br />
@@ -92,12 +93,12 @@ const ImageUploader = ({ id, data }) => {
         {/* <input className='imageText' type="file" multiple /> */}
   
             <button
-            className="upload-btn" type='submit'
+            className="upload-btn" onClick={uploadImage}
             >
               Upload {selectedImages.length} image
               {selectedImages.length === 1 ? "" : "s"}
             </button>
-          </form>
+          {/* </form> */}
   
         <div className="images">
           {selectedImages &&

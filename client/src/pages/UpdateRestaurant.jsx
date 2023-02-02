@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import ImageUploader from '../components/ImageUploader'
 import { useStateContext } from '../contextProviders/ContextProvider'
 import AdminNavBar from '../components/AdminNavBar'
+import PdfUploader from '../components/PdfUploader'
 
 const UpdateRestaurant = () => {
 
@@ -131,11 +132,12 @@ const UpdateRestaurant = () => {
             <div className='border-t-2 border-teal-500 pb-8'>
                 <h1 className='text-2xl font-medium text-gray-700 mt-10'>Menu & Working hours</h1>
                 <div className='flex justify-between '>
-                    <div>
+                    {/* <div>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
-                        <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
+                        <input type="file" accept="image/pdf" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
-                    </div>
+                    </div> */}
+                    <PdfUploader id={restaurantData.RestaurantID} />
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Operation hours</h1>
                         <div className='flex justify-start space-x-2'>
@@ -184,11 +186,11 @@ const UpdateRestaurant = () => {
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p> */}
 
+        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
 
             <button>Lets Go</button>
         </form>
 
-        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
         
         </div>
     </div>

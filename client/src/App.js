@@ -25,6 +25,10 @@ import OldReservations from './pages/OldReservations'
 import { Axios } from 'axios'
 import UpdateRestaurant from './pages/UpdateRestaurant'
 import RestaurantSignUp from './pages/RestaurantSignUp'
+import ReportSelector from './components/ReportSelector'
+import ReportViewer from './pages/ReportViewer'
+import RestaurantReportSelector from './components/RestaurantReportSelector'
+import RestaurantReportView from './pages/RestaurantReportView'
 
 
 const App = () => {
@@ -58,6 +62,8 @@ const App = () => {
           <Route path='/review' element={ <ViewReview /> } />
           <Route path='/update_restaurant' element={<UpdateRestaurant /> } />
           <Route path='/restaurant_signup' element={<RestaurantSignUp /> } />
+          <Route path='/restaurant_report' element={<RestaurantReportSelector />} />
+          <Route path='/restaurant_report_view' element={<RestaurantReportView />} />
 
           {/* Admin Pages */}
           <Route path='/admin_login' element={<AdminLogin />} />
@@ -65,6 +71,8 @@ const App = () => {
           <Route path='/admin_add_restaurant' element={ <AdminAddRestaurant /> } />
           <Route path='/admin_view_restaurants' element={<AdminViewRestaurants />} />
           <Route path='/admin_view_restaurant' element={<AdminViewRestaurant />} />
+          <Route path='/admin_select_reports' element={<ReportSelector />} />
+          <Route path='/admin_view_reports' element={<ReportViewer />} />
         </Routes>
       {/* <Footer /> */}
       </BrowserRouter>
