@@ -34,6 +34,11 @@ export const RestaurantAdminLinks = [
             link: 'review',
             icon: <MdOutlineReviews />
         },
+        {
+          name: 'Report',
+          link: 'restaurant_report',
+          icon: <MdOutlineReviews />
+        },
 
       ],
     },
@@ -58,6 +63,11 @@ export const WebsiteAdminLinks = [
                 name: 'View Restaurant',
                 link: 'admin_view_restaurants',
                 icon: <HiOutlineViewColumns />
+            },
+            {
+              name: 'Reports',
+              link: 'admin_select_reports',
+              icon: <HiOutlineViewColumns />
             },
         ]
     }

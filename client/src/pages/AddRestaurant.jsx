@@ -7,15 +7,20 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useStateContext } from '../contextProviders/ContextProvider'
 import ImageUploader from '../components/ImageUploader'
+import { useLocation, useNavigate } from 'react-router'
 
 const AddRestaurant = () => {
 
     const [restaurantData, setRestaurantData] = useState({})
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
 
+    const navigate = useNavigate();
+    const { state } = useLocation();
+
     useEffect(() => {
         setSidebarActive(false)
         setRestaurantSidebar(false)
+        console.log(state.email)
     }, [])
 
     
@@ -37,6 +42,9 @@ const AddRestaurant = () => {
         website: yup.string().url(),
         facilities: yup.string().required(),
         location: yup.string(),
+        password: yup.string().required(),
+        confirmPassword: yup.string().oneOf([yup.ref("password"), null]),
+        email: yup.string()
         // image: yup.mixed().required()
         //         .test("required", "You need to provide a file", (file) => {
         // return file && file.length
@@ -60,6 +68,10 @@ const AddRestaurant = () => {
         try {
             const response = await axios.post("http://localhost:8800/add_restaurant_details", data)    
             console.log(response)
+
+            if(response.data.affectedRows > 0){
+                navigate('/admin_login')
+            }
         } catch (error) {
             console.log(error)
         }
@@ -155,6 +167,17 @@ const AddRestaurant = () => {
                     <input type="text" placeholder="If website available please paste the URL here" {...register("website")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
                 </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-10'>New Password</h1>
+                    <input type="password" placeholder="Password" {...register("password")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.password?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-10'>Confirm Password</h1>
+                    <input type="password" placeholder="Confirm Password" {...register("confirmPassword")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.confirmPassword && "Passwords do not match"}</p>
+                </div>
+                <input type="text" hidden placeholder="" style={{ padding: 0 }} {...register("email")} value={state.email}/>
             </div>
             <div className='my-14 mx-80'>
                 <button className="w-72 h-12 text-lg bg-teal-500 text-white font-medium hover:bg-teal-700 duration-300 rounded-md px-2">Add details</button>

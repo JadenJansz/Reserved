@@ -27,6 +27,7 @@ const CustomerSearchRestaurants = () => {
     useEffect(() => {
 
         getRestaurants();
+        console.log('lol')
     }, [])
     
     useEffect(() => {

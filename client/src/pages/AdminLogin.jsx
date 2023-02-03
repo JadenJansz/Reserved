@@ -36,7 +36,7 @@ const AdminLogin = () => {
             console.log(response)
 
             if(response.data.data.status === "Inactive"){
-                navigate('/add_restaurant')
+                navigate('/add_restaurant', { state: { email : data.email} })
                 return
             } 
             if(response.data.data === "Inactive User"){

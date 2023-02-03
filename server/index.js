@@ -16,14 +16,19 @@ const storage = multer.diskStorage({
         cb(null, 'Images')
     },
     filename: (req, file, cb) => {
-        // console.log(file)
+        console.log(file)
         cb(null, Date.now() + path.extname(file.originalname))
     }
 })
 
 const upload = multer({ storage: storage })
 
-app.use(cors());
+const corsOptions ={
+    origin:'http://localhost:3000', 
+    credentials:true,            //access-control-allow-credentials:true
+    optionSuccessStatus:200
+}
+app.use(cors(corsOptions));
 
 app.use(express.static('Images'));
 app.use(cookieParser());
@@ -59,6 +64,17 @@ app.get("/search_restaurants_time", (req, res) => {
     FROM restaurant
     WHERE restaurant.RestaurantID NOT IN (SELECT reservation.RestaurantID FROM reservation WHERE Date = '${req.query.date}' AND Time = '${req.query.time}')`;
     
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+        return res.json(data)
+    })
+})
+
+app.get("/search_restaurants_name", (req, res) => {
+    console.log(req.query)
+    const sql = `SELECT RestaurantID FROM restaurant WHERE Name LIKE '${req.query.name}%' `
+
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
 
@@ -133,6 +149,39 @@ app.get("/admin_login", (req, res) => {
         res.send({ loggedIn: false })
     }
 
+})
+
+app.get('/admin_restaurant_registration_report', (req, res) => {
+    console.log(req.query)
+    const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined < '${req.query.year}-${req.query.month}-30' AND DATE >  '${req.query.year}-${req.query.month}-01' `   
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+        return res.json(data)
+    })
+})
+
+app.get('/admin_income_report', (req, res) => {
+
+    const sql = `SELECT restaurant.Name, reservation.* FROM restaurant, reservation WHERE restaurant.RestaurantID = reservation.RestaurantID`
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+        return res.json(data)
+    })
+})
+
+app.get('/restaurant_reservation_report', (req, res) => {
+    
+    const sql = `SELECT * FROM reservation WHERE RestaurantID = ${req.query.id} AND Date < '${req.query.year}-${req.query.month}-30' AND DATE >  '${req.query.year}-${req.query.month}-01'`
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err)
+
+        return res.json(data)
+    })
 })
 
 app.post("/customer_login", (req, res) => {
@@ -245,7 +294,16 @@ app.post("/admin_create_restaurant", (req, res) => {
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
-        return res.json(data);
+
+        if(data.affectedRows > 0){
+            
+            const sql = `INSERT into restaurant_admin(Email) VALUES ('${req.body.email}')`
+    
+            db.query(sql, (err, data) => {
+                if(err) return res.json(err);
+                return res.json(data);
+            })
+        }
     })
 })
 
@@ -253,6 +311,38 @@ app.post("/add_restaurant_details", (req, res) => {
     // console.log(req.body)
     const sql = `Insert into restaurant (Name, AddressLine1, AddressLine2, AddressLine3, ContactNumber, Cuisine, OpenTime, CloseTime, ParkingDetails, PaymentOption, Website, Facilities) VALUES ('${req.body.name}','${req.body.address1}', '${req.body.address2}', '${req.body.address3}', '${req.body.contactNumber}', '${req.body.cuisine}', '${req.body.open}', '${req.body.close}', '${req.body.parking}',  '${req.body.payment}',  '${req.body.website}',  '${req.body.facilities}')`;
     
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+
+        if(data.affectedRows > 0){
+            
+            const id = `UPDATE restaurant SET RestaurantAdminID = ${data.insertId} WHERE RestaurantID = ${data.insertId}`
+            
+            db.query(id, (err, data) => {
+                if(err) return res.json(err);
+                
+                const password = `UPDATE user SET Password = '${req.body.password}', status = 'Active' WHERE Email = '${req.body.email}'`
+                
+                db.query(password, (err, data) => {
+                    if(err) return res.json(err);
+                    return res.json(data);
+                })
+            })
+        }else{
+            return res.json({data:'Inactive User'})
+        }
+    })
+})
+
+app.post("/upload_menu", upload.array("image"), (req, res) => {
+    const arr = [];
+    req.files.map((obj, i) => {
+        arr.push(obj.filename)
+    })
+    console.log(arr)
+
+    const sql = `UPDATE restaurant SET Menu = ${JSON.stringify(arr)} WHERE RestaurantID = ${req.body.id}`
+
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
         return res.json(data);
