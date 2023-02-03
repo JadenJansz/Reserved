@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null, 'Images')
     },
     filename: (req, file, cb) => {
-        // console.log(file)
+        console.log(file)
         cb(null, Date.now() + path.extname(file.originalname))
     }
 })
@@ -334,10 +334,14 @@ app.post("/add_restaurant_details", (req, res) => {
     })
 })
 
-app.post("/upload_menu", upload.single("file"), (req, res) => {
-    console.log(req.body);
+app.post("/upload_menu", upload.array("image"), (req, res) => {
+    const arr = [];
+    req.files.map((obj, i) => {
+        arr.push(obj.filename)
+    })
+    console.log(arr)
 
-    const sql = `UPDATE restaurant SET Menu = ${JSON.stringify(req.body.image)} WHERE RestaurantID = ${req.body.id}`
+    const sql = `UPDATE restaurant SET Menu = ${JSON.stringify(arr)} WHERE RestaurantID = ${req.body.id}`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
