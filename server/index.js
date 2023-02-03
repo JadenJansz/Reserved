@@ -339,9 +339,9 @@ app.post("/upload_menu", upload.array("image"), (req, res) => {
     req.files.map((obj, i) => {
         arr.push(obj.filename)
     })
-    console.log(arr)
+    console.log(JSON.stringify(arr))
 
-    const sql = `UPDATE restaurant SET Menu = ${JSON.stringify(arr)} WHERE RestaurantID = ${req.body.id}`
+    const sql = `UPDATE restaurant SET Menu = '${JSON.stringify(arr)}' WHERE RestaurantID = ${req.body.id}`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);

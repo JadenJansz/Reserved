@@ -68,7 +68,7 @@ const CustomerViewRestaurant = () => {
         console.log(error)
       }
     }
-    
+
   return (
     <div>
       <NavBar />
@@ -111,28 +111,13 @@ const CustomerViewRestaurant = () => {
               </div>
             </div>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Menu</h1>
-            <h1 className="text-sm text-gray-800 font-normal mt-6">
-              Seafood & Sri Lankan Buffet
-              Rs 2750++++. Extra charge will be levied for the following items: Live Crab, Jumbo Prawns, Lobster
+              <embed src={`http://localhost:8800/${restaurant.Menu != undefined ? JSON.parse(restaurant.Menu)[0] : 'placeholder.jpg'}`} type="application/pdf" width="100%" height="650px" />
+              {/* <div style={{ backgroundColor: 'black' }}>
 
-                Salad Bar
-                Soup
-                Fried Rice
-                Steamed Rice
-                Egg & Vegetable Noodles
-                Chicken Curry
-                Fish Curry
-                Mutton Curry
-                Cashew Curry & Vegetarian Dishes
-                Red & White String Hoppers
-                Raw & Seafood Buffet
-                including the following items: Modha, Seer, Mullet, Garoupa, Cuttlefish, Prawns, Crab etc.
-                Hoppers, Kottu & Roti Pittu
-                Dessert Buffet of Six Desserts
-                Fresh Fruits, Local Sweetmeats
-                Ice Cream
-                Curd With Treacle
-            </h1>
+              <Document file="https://cors-anywhere.herokuapp.com/https://www.africau.edu/images/default/sample.pdf" className='react-pdf__Page__canvas' >
+              <Page pageNumber={2} />
+              </Document>
+              </div> */}
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">What people are saying</h1>
 
             {

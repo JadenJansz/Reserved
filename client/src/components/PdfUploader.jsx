@@ -48,7 +48,7 @@ const ImageUploader = ({ id, data }) => {
       try {
         const response = await axios.post("http://localhost:8800/upload_menu", formData, { headers: {'Content-Type': 'multipart/form-data'}});
         console.log(response)
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error)
       }
