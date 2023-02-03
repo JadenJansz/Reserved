@@ -91,10 +91,10 @@ const UpdateRestaurant = () => {
         </div>
         <div className='ml-16 mt-4'>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex justify-start space-x-16'>
+            <div className=''>
                 <div className='block'>
-                    <h1 className='text-base font-medium text-gray-400 mt-4'>Primary name</h1>
-                    <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <h1 className='text-base font-medium text-gray-400 mt-4'>Restaurant name</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.Name} {...register("name")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.name?.message}</p>
                 </div>
                 {/* <div className='block'>
@@ -130,9 +130,13 @@ const UpdateRestaurant = () => {
             <p>{errors.cuisine?.message}</p> */}
             <div className='border-t-2 border-teal-500 pb-8'>
                 <h1 className='text-2xl font-medium text-gray-700 mt-10'>Menu & Working hours</h1>
+                <div>
+                    <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine</h1>
+                    <input type="text" placeholder="Enter available cuisine types" defaultValue={restaurantData.Cuisine} {...register("cuisine")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.cuisine?.message}</p>
                 <div className='flex justify-between '>
                     <div>
-                        <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine document</h1>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Menu document</h1>
                         <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
                     </div>
@@ -146,38 +150,51 @@ const UpdateRestaurant = () => {
                         </div>
                     </div>
                 </div>
+
+                </div>
             </div>
 
             <div className='border-t-2 border-teal-500 pb-8'>
-                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images & Location</h1>
+                <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images</h1>
                 <h1 className='text-base font-medium text-gray-400 mt-10'>Enter your images</h1>
                 {/* <ImageUploader /> */}
-                <h1 className='text-base font-medium text-gray-400 mt-10'>Search your restaurant loaaction on Google maps and copy the browser URL and paste here</h1>
-                <input type="text" placeholder="" defaultValue={restaurantData.Website} {...register("website")} className="w-[960px] h-12 bg-teal-100 border-0 rounded-lg"/>
-                <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
             </div>
-            <input type="text" placeholder="Cuisine" defaultValue={restaurantData.Cuisine} {...register("cuisine")} />
-            <p>{errors.cuisine?.message}</p>
 
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-xl font-medium text-gray-700 mt-10'>Parking & Facilities</h1>
+                <div className='flex justify-between '>
+                    <div>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Parking</h1>
+                        <input type="text" placeholder="Parking" defaultValue={restaurantData.ParkingDetails} {...register("parking")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2"/>
+                        <p className="ml-2 text-sm text-rose-600">{errors.parking?.message}</p>
+                    </div>
+                    <div className='block'>
+                        <h1 className='text-base font-medium text-gray-400 mt-10'>Facilities</h1>
+                        <textarea placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2"/>
+                        <p className="ml-2 text-sm text-rose-600">{errors.facilities?.message}</p>     
+                    </div>
+                </div>
+            </div>
 
-            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} />
-            <p>{errors.open?.message}</p>
-
-            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} />
-            <p>{errors.close?.message}</p>
-
-            <input type="text" placeholder="Parking" defaultValue={restaurantData.ParkingDetails} {...register("parking")} />
-            <p>{errors.parking?.message}</p>
-
-            <input type="text" placeholder="Payment Options" defaultValue={restaurantData.PaymentOption} {...register("payment")} />
-            <p>{errors.payment?.message}</p>
-
-            <textarea placeholder='Facilities' defaultValue={restaurantData.Facilities} {...register("facilities")} />
-            <p>{errors.facilities?.message}</p>
-
-            <textarea placeholder='Location'  defaultValue={restaurantData.Location ? restaurantData.Location : "null"}  {...register("location")} />
-            <p>{errors.location?.message}</p>
-
+            <div className='border-t-2 border-teal-500 pb-8'>
+                <h1 className='text-xl font-medium text-gray-700 mt-10'>Other</h1>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-10'>Payment options</h1>
+                    <input type="text" placeholder="Payment Options" defaultValue={restaurantData.PaymentOption} {...register("payment")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.payment?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-8'>Location URL</h1>
+                    <input type="text" placeholder='Search your restaurant loaction on Google maps and copy the browser URL and paste here'  defaultValue={restaurantData.Location ? restaurantData.Location : "null"}  {...register("location")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.location?.message}</p>
+                </div>
+                <div className='block'>
+                    <h1 className='text-base font-medium text-gray-400 mt-10'>Website URL</h1>
+                    <input type="text" placeholder="" defaultValue={restaurantData.Website} {...register("website")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
+                    <p className="ml-2 text-sm text-rose-600">{errors.website?.message}</p>
+                </div>
+            </div>
+            
             {/* <input type="file" multiple accept="image/*" placeholder="Menu" {...register("menu")} />
             <p>{errors.menu?.message}</p>
 
@@ -188,7 +205,7 @@ const UpdateRestaurant = () => {
             <button>Lets Go</button>
         </form>
 
-        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
+        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} className="absolute left-0 right-0 top-96" />}
         
         </div>
     </div>
