@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import ImageUploader from '../components/ImageUploader'
 import { useStateContext } from '../contextProviders/ContextProvider'
 import AdminNavBar from '../components/AdminNavBar'
+import PdfUploader from '../components/PdfUploader'
 
 const UpdateRestaurant = () => {
 
@@ -135,11 +136,7 @@ const UpdateRestaurant = () => {
                     <input type="text" placeholder="Enter available cuisine types" defaultValue={restaurantData.Cuisine} {...register("cuisine")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.cuisine?.message}</p>
                 <div className='flex justify-between '>
-                    <div>
-                        <h1 className='text-base font-medium text-gray-400 mt-10'>Menu document</h1>
-                        <input type="file" multiple accept="image/*" placeholder="" {...register("menu")} className="w-[450px] h-16 bg-teal-100 border-0 rounded-lg"/>
-                        <p className="ml-2 text-sm text-rose-600">{errors.menu?.message}</p>
-                    </div>
+                    <PdfUploader id={restaurantData.RestaurantID} />
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Operation hours</h1>
                         <div className='flex justify-start space-x-2'>
@@ -201,6 +198,7 @@ const UpdateRestaurant = () => {
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p> */}
 
+        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
 
             <button>Lets Go</button>
         </form>

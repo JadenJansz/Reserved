@@ -4,7 +4,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { json, useNavigate } from 'react-router'
-
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Search = () => {
     // const date = `${new Date().getFullYear()+1}-${new Date().getMonth()+1}-${new Date().getDate()}`.toString()
@@ -60,6 +60,24 @@ const Search = () => {
         setNameSearch(e.target.value)
         console.log(nameSearch)
     }
+
+    const searchRestaurant = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.get('http://localhost:8800/search_restaurants_name', {params: {name: nameSearch}} )
+
+            if(response.data.length > 0){
+                const result = (response.data).flatMap(item => item.RestaurantID)
+                
+                navigate('/search_restaurants', { state: result })
+            }else{
+                alert("Your search does not match any restaurants")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
  
   return (
     <div className="bg-gradient-to-r from-teal-500 via-teal-400 to-teal-400 w-screen h-64 sm:h-80 px-4 py-14"> 
@@ -105,6 +123,7 @@ const Search = () => {
                     <option value="10">10 people</option>
                 </select>
                 <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300 border-0"  onChange={handleNameChange}></input>
+                <AiOutlineSearch onClick={searchRestaurant}/>
                 <button className="ml-10 h-14 bg-teal-600 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-10 py-4 mt-2.5" onClick={handleClick} >Get started</button>
             </div> 
         </div>

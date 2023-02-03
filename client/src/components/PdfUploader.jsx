@@ -22,14 +22,6 @@ const ImageUploader = ({ id, data }) => {
       // FOR BUG IN CHROME
       // selected.target.value = "";
     };
-
-    useEffect(() => {
-      console.log(data)
-      if(data.Image){
-        setExistImages(JSON.parse(data.Image))
-
-      }
-    }, [data])
     
     useEffect(() => {
 
@@ -54,9 +46,9 @@ const ImageUploader = ({ id, data }) => {
       }
       formData.append('id', id)
       try {
-        const response = await axios.post("http://localhost:8800/upload_images", formData, { headers: {'Content-Type': 'multipart/form-data'}});
+        const response = await axios.post("http://localhost:8800/upload_menu", formData, { headers: {'Content-Type': 'multipart/form-data'}});
         console.log(response)
-        window.location.reload();
+        // window.location.reload();
       } catch (error) {
         console.log(error)
       }
@@ -64,56 +56,25 @@ const ImageUploader = ({ id, data }) => {
   
     return (
       <section>
-        <label className='imageLabel' />
-          <BiImageAdd className='w-16 h-16'/>
-           Browse and add images from your local computer
-        {
-          existImages.length > 0 && (
-            existImages.map((image) => (
-                <img className='uploaderImg' src={`http://localhost:8800/${image}`} alt='image' width={100} height={100} key={image} />
-            ))
-          )
-        }
         {/* <form onSubmit={uploadImage} > */}
         <label>
-          + Add Images
+          + Add PDF
           <br />
-          <span>up to 10 images</span>
           <input
-            className='imageText'
             type="file"
             name="image"
             onChange={e => setSelected((prev) => [...e.target.files])}
             multiple
-            accept="image/png , image/jpeg, image/webp"
+            accept="application/pdf"
             />
         </label>
         <br />
   
         {/* <input className='imageText' type="file" multiple /> */}
   
-            <button
-            className="upload-btn" onClick={uploadImage}
-            >
-              Upload {selectedImages.length} image
-              {selectedImages.length === 1 ? "" : "s"}
+            <button onClick={uploadImage}>
+              Upload
             </button>
-          {/* </form> */}
-  
-        <div className="images">
-          {selectedImages &&
-            selectedImages.map((image, index) => {
-              return (
-                <div key={image} className="image">
-                  <img className='uploaderImg' src={image} height="150" width="150" alt="upload" />
-                  <button onClick={() => deleteHandler(image)}>
-                    Delete image
-                  </button>
-                  <p>{index + 1}</p>
-                </div>
-              );
-            })}
-        </div>
       </section>
     );
 }

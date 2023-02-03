@@ -31,41 +31,64 @@ const CustomerConfirmReservation = () => {
     }
   }, [])
 
-  const handleSubmit = async (event, elements, stripe) => {
-    event.preventDefault();
+      const handleSubmit = async (event, elements, stripe) => {
+        event.preventDefault();
 
-    if(!stripe || !elements) return;
+        if(!stripe || !elements) return;
 
-    const cardElement = elements.getElement(CardElement);
+        const cardElement = elements.getElement(CardElement);
 
-    const { error, paymentMethod} = await stripe.createPaymentMethod({ type:'card', card: cardElement })
+        const { error, paymentMethod} = await stripe.createPaymentMethod({ type:'card', card: cardElement })
 
-      if(error){
-        console.log(error);
-      }
-      else{
-          try {
-            const response = await axios.post('http://localhost:8800/add_reservation', { data: details, table: table, restaurant: state.RestaurantID });
-            console.log(response)
+          if(error){
+            console.log(error);
+          }
+          else{
+              try {
+                const response = await axios.post('http://localhost:8800/add_reservation', { data: details, table: table, restaurant: state.RestaurantID });
+                console.log(response)
 
-            if(response.data.affectedRows > 0){
-              navigation('/complete_reservation', { state : { table: table,  restaurant: state }})
+                if(response.data.affectedRows > 0){
+                  navigation('/complete_reservation', { state : { table: table,  restaurant: state }})
 
-              emailjs.sendForm('service_t7uab8a', 'template_4gewh6p', form.current, 'WxqAsIdocDRfM1kpI')
-                .then((result) => {
-                    console.log(result.text);
-                }, (error) => {
-                    console.log(error.text);
-                });
-            }
-            else{
-              alert(response)
-            }
-          } catch (err) {
-            console.log(err)
+                  emailjs.sendForm('service_t7uab8a', 'template_4gewh6p', form.current, 'WxqAsIdocDRfM1kpI')
+                    .then((result) => {
+                        console.log(result.text);
+                    }, (error) => {
+                        console.log(error.text);
+                    });
+                }
+                else{
+                  alert(response)
+                }
+              } catch (err) {
+                console.log(err)
+              }
           }
       }
-  }
+
+      const cardStyle = {
+        style: {
+          base: {
+            iconColor: '#c4f0ff',
+            color: '#fff',
+            fontWeight: '500',
+            fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+            fontSize: '16px',
+            fontSmoothing: 'antialiased',
+            ':-webkit-autofill': {
+              color: '#fce883',
+            },
+            '::placeholder': {
+              color: '#87BBFD',
+            },
+          },
+          invalid: {
+            iconColor: '#FFC7EE',
+            color: '#FFC7EE',
+          },
+        },
+      };
 
   return (
     <div>
@@ -112,7 +135,7 @@ const CustomerConfirmReservation = () => {
                               <input type="text" placeholder="Name on card" className="rounded-xl px-4 py-4 bg-teal-100 w-96 h-12"></input>
                               <img src={Card} className="w-36 h-14 mt-2"></img>
                             </div>
-                              <CardElement options={{width: '100px'}}/>
+                              <CardElement options={cardStyle}/>
                               <button className="w-96 h-12 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-lg px-6 ml-52 mt-10"> Confirm reservation </button>
                           </form>
                       )}
