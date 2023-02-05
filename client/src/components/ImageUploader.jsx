@@ -64,18 +64,10 @@ const ImageUploader = ({ id, data }) => {
   
     return (
       <section>
-          <BiImageAdd className='w-16 h-16'/>
-           Browse and add images from your local computer
-        {
-          existImages.length > 0 && (
-            existImages.map((image) => (
-                <img className='uploaderImg' src={`http://localhost:8800/${image}`} alt='image' width={100} height={100} key={image} />
-            ))
-          )
-        }
+        <label className='' />
         {/* <form onSubmit={uploadImage} > */}
-        <label>
-          + Add Images
+        <label className='imageLabel'>
+          <h1 className='text-center text-gray-700 text-lg font-medium'>+ Add Images from your local</h1>
           <br />
           <span>up to 10 images</span>
           <input
@@ -87,6 +79,15 @@ const ImageUploader = ({ id, data }) => {
             accept="image/png , image/jpeg, image/webp"
             />
         </label>
+        <div className='flex w-full justify-center space-x-6 mt-6'>
+          {
+            existImages.length > 0 && (
+              existImages.map((image) => (
+                  <img className='uploaderImg' src={`http://localhost:8800/${image}`} alt='image' width={100} height={100} key={image} />
+              ))
+            )
+          }
+        </div>
         <br />
   
         {/* <input className='imageText' type="file" multiple /> */}
@@ -103,7 +104,7 @@ const ImageUploader = ({ id, data }) => {
           {selectedImages &&
             selectedImages.map((image, index) => {
               return (
-                <div key={image} className="image">
+                <div key={image} className="image flex justify-center">
                   <img className='uploaderImg' src={image} height="150" width="150" alt="upload" />
                   <button onClick={() => deleteHandler(image)}>
                     Delete image

@@ -68,8 +68,8 @@ const AdminAddRestaurant = () => {
           <p className="ml-2 text-sm text-rose-600">{errors.location?.message}</p>
           <input type="text" name='password' value={password} className="opacity-0" {...register("password")} />
           <div className="flex justify-center space-x-6 mt-10">
-            <button type='submit' className="w-44 h-10 text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">Add restaurant</button>
             <button className="w-44 h-10 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2">Clear details</button>
+            <button type='submit' className="w-44 h-10 text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">Add restaurant</button>
           </div>
         </form>
       </div>
