@@ -6,6 +6,10 @@ import { useStateContext } from '../contextProviders/ContextProvider';
 import AdminNavBar from '../components/AdminNavBar'
 import ResHero from "../assets/ResHero.jpg"
 import ResSecond from "../assets/ResSecond.jpg"
+import { FaRegMoneyBillAlt, FaPeopleArrows } from "react-icons/fa"
+import { MdRestaurant } from "react-icons/md"
+import Linechart from '../components/Linechart'
+import Piechart from '../components/Piechart'
 
 const AdminHome = () => {
 
@@ -29,48 +33,52 @@ const AdminHome = () => {
     })
 
   }, [])
-  
+
   return (
     <div className=''>
       <AdminNavBar/>
-      <div className="relative mt-32 px-16">
-        <img src={ResHero} className="w-[1120px] h-64 rounded-xl"></img>
-        <h2 className="absolute text-3xl font-semibold text-white top-6 text-left left-24 right-0">
-          Use upto date<br/>
-          images and details to help<br/>
-          customers in their reservations<br/>
-        </h2>
-        <button className="absolute w-60 left-24 right-0 top-44 h-12 bg-teal-100 text-gray-700 font-semibold hover:bg-teal-300 duration-300 rounded-lg px-10">Update profile</button>
-        <div className="flex justify-center space-x-16 mt-10">
-          <div className="block">
-            <h1 className='text-2xl font-medium text-gray-700 mt-2 mb-6'>Recent reviews</h1>
-            <div className="flex w-[500px] bg-teal-100 rounded-lg p-4 mt-4">
-              <div className="block w-[300px]">
-                <h1 className='text-lg font-medium text-teal-600'>New review update</h1>
-                <p className="w-52 text-xs font-normal text-gray-700">
-                  you have a new update from customer James Pattingson.
-                </p>
+      <div className="mt-32 px-16">
+        <div className="flex justify-between w-[1120px] h-52 rounded-xl">
+          <div className='w-[350px] h-40 rounded-lg bg-teal-100'>
+            <div className='flex justify-between'>
+              <div className='w-24 h-24 bg-teal-500 rounded-lg mt-8 ml-6 px-5 py-5'>
+                <MdRestaurant className='w-14 h-14 text-white'/>
               </div>
-              <div className="flex justify-between space-x-4 mt-2">
-                <button className="w-20 h-12 bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">View</button>
-                <button className="w-20 h-12 bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2">Dismiss</button>
-              </div>
-            </div>
-            <div className="flex w-[500px] bg-teal-100 rounded-lg p-4 mt-4">
-              <div className="block w-[300px]">
-                <h1 className='text-lg font-medium text-teal-600'>New review update</h1>
-                <p className="w-52 text-xs font-normal text-gray-700">
-                  you have a new update from customer James Pattingson.
-                </p>
-              </div>
-              <div className="flex justify-between space-x-4 mt-2">
-                <button className="w-20 h-12 bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2">View</button>
-                <button className="w-20 h-12 bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2">Dismiss</button>
+              <div className='mt-12 pr-6'>
+                <h1 className='text-4xl font-bold text-gray-800 text-right'>123</h1>
+                <h2 className='text-lg font-medium text-gray-800 text-right'>Active Restaurants</h2>
               </div>
             </div>
           </div>
-          <div>
-            <img src={ResSecond} className="w-[550px] h-72 rounded-xl"></img>
+          <div className='w-[350px] h-40 rounded-lg bg-teal-100'>
+          <div className='flex justify-between'>
+              <div className='w-24 h-24 bg-teal-500 rounded-lg mt-8 ml-6 px-5 py-5'>
+                <FaPeopleArrows className='w-14 h-14 text-white'/>
+              </div>
+              <div className='mt-12 pr-6'>
+                <h1 className='text-4xl font-bold text-gray-800 text-right'>123</h1>
+                <h2 className='text-lg font-medium text-gray-800 text-right'>Active Customers</h2>
+              </div>
+            </div>
+          </div>
+          <div className='w-[350px] h-40 rounded-lg bg-teal-100'>
+          <div className='flex justify-between'>
+              <div className='w-24 h-24 bg-teal-500 rounded-lg mt-8 ml-6 px-5 py-5'>
+                <FaRegMoneyBillAlt className='w-14 h-14 text-white'/>
+              </div>
+              <div className='mt-12 pr-6'>
+                <h1 className='text-4xl font-bold text-gray-800 text-right'>123</h1>
+                <h2 className='text-lg font-medium text-gray-800 text-right'>Total Revenue</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex justify-center space-x-10 mt-6">
+          <div className="block w-[400px] h-80">
+            <Piechart/>
+          </div>
+          <div className='w-[670px] h-80'>
+            <Linechart/>
           </div>
         </div>
       </div>

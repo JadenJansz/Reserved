@@ -57,8 +57,9 @@ const ImageUploader = ({ id, data }) => {
     return (
       <section>
         {/* <form onSubmit={uploadImage} > */}
+        <div className='flex justify-between space-x-4'>
         <label>
-          + Add PDF
+          <h1 className='text-base font-medium text-gray-400'>Menu</h1>
           <br />
           <input
             type="file"
@@ -66,15 +67,17 @@ const ImageUploader = ({ id, data }) => {
             onChange={e => setSelected((prev) => [...e.target.files])}
             multiple
             accept="application/pdf"
+            className='bg-teal-100 rounded-lg border-0'
             />
         </label>
         <br />
   
         {/* <input className='imageText' type="file" multiple /> */}
   
-            <button onClick={uploadImage}>
+            <button onClick={uploadImage} className='w-auto mt-14 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg'>
               Upload
             </button>
+            </div>
       </section>
     );
 }

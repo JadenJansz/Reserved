@@ -4,6 +4,7 @@ import { BiNotification } from 'react-icons/bi'
 import { MdOutlineReviews } from 'react-icons/md'
 import { CgAddR } from 'react-icons/cg'
 import { HiOutlineViewColumns } from 'react-icons/hi2'
+import { TbReportAnalytics } from 'react-icons/tb'
 
 export const RestaurantAdminLinks = [
     {
@@ -37,7 +38,7 @@ export const RestaurantAdminLinks = [
         {
           name: 'Report',
           link: 'restaurant_report',
-          icon: <MdOutlineReviews />
+          icon: <TbReportAnalytics />
         },
 
       ],
@@ -67,7 +68,7 @@ export const WebsiteAdminLinks = [
             {
               name: 'Reports',
               link: 'admin_select_reports',
-              icon: <HiOutlineViewColumns />
+              icon: <TbReportAnalytics />
             },
         ]
     }

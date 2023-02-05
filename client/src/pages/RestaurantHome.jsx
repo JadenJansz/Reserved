@@ -17,7 +17,7 @@ const RestaurantHome = () => {
   return (
     <div className=''>
       <AdminNavBar/>
-      <div className="relative mt-32 px-16">
+      <div className="relative mt-28 px-16">
         <img src={ResHero} className="w-[1120px] h-64 rounded-xl"></img>
         <h2 className="absolute text-3xl font-semibold text-white top-6 text-left left-24 right-0">
           Use upto date<br/>

@@ -122,8 +122,8 @@ const Search = () => {
                     <option value="9">9 people</option>
                     <option value="10">10 people</option>
                 </select>
-                <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-xl px-4 py-4 bg-teal-100 hover:bg-white hover:shadow-md hover:shadow-teal-600 duration-300 border-0"  onChange={handleNameChange}></input>
-                <AiOutlineSearch onClick={searchRestaurant}/>
+                <input type="text" placeholder="Search Restaurants" className="ml-10 rounded-l-xl px-4 py-4 bg-teal-100 duration-300 border-0"  onChange={handleNameChange}></input>
+                <AiOutlineSearch onClick={searchRestaurant} className="w-8 h-14 bg-teal-100 mt-2.5 pr-2 rounded-r-xl cursor-pointer hover:w-10 duration-300"/>
                 <button className="ml-10 h-14 bg-teal-600 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-10 py-4 mt-2.5" onClick={handleClick} >Get started</button>
             </div> 
         </div>

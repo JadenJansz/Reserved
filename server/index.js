@@ -153,7 +153,7 @@ app.get("/admin_login", (req, res) => {
 
 app.get('/admin_restaurant_registration_report', (req, res) => {
     console.log(req.query)
-    const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined < '${req.query.year}-${req.query.month}-30' AND DATE >  '${req.query.year}-${req.query.month}-01' `   
+    const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined < '${req.query.year}-${req.query.month}-30' AND DateJoined >  '${req.query.year}-${req.query.month}-01' ` 
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
@@ -164,7 +164,7 @@ app.get('/admin_restaurant_registration_report', (req, res) => {
 
 app.get('/admin_income_report', (req, res) => {
 
-    const sql = `SELECT restaurant.Name, reservation.* FROM restaurant, reservation WHERE restaurant.RestaurantID = reservation.RestaurantID`
+    const sql = `SELECT restaurant.Name, reservation.* FROM restaurant, reservation WHERE restaurant.RestaurantID = reservation.RestaurantID AND DateJoined < '${req.query.year}-${req.query.month}-30' AND DATE >  '${req.query.year}-${req.query.month}-01'`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
