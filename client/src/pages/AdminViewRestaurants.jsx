@@ -16,16 +16,38 @@ const AdminViewRestaurants = () => {
 
     const [restaurants, setRestaurants] = useState([])
     const { sidebarActive, setSidebarActive ,setRestaurantSidebar} = useStateContext();
+    const [nameSearch, setNameSearch] = useState('');
     
     const fetchRestaurants = async () => {
         try {
             const response = await axios.get('http://localhost:8800/admin_view_reataurants');
             console.log(response.data);
-
             setRestaurants(response.data)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const searchRestaurant = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.get('http://localhost:8800/search_restaurants_name', {params: {name: nameSearch}} )
+
+            if(response.data.length > 0){
+                setRestaurants(response.data)
+                console.log(response.data)
+            }else{
+                alert("Your search does not match any restaurants")
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const handleNameChange = (e) => {
+        setNameSearch(e.target.value)
+        console.log(nameSearch)
     }
 
     useEffect(() => {
@@ -65,18 +87,10 @@ const AdminViewRestaurants = () => {
         <AdminNavBar/>
         <div className="block mt-36 px-16">
             <h1 className='text-2xl font-medium text-gray-700 mb-4 mt-4'>Search to view restaurant</h1>
-            <input type="text" placeholder="Type restaurant name here" className="rounded-lg px-4 py-4 bg-teal-100 w-96 h-10 border-0"></input>
-            <button className="w-28 h-10 text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2 ml-4 mt-2">Search</button>
+            <input type="text" placeholder="Type restaurant name here" className="rounded-lg px-4 py-4 bg-teal-100 w-96 h-10 border-0" onChange={handleNameChange}></input>
+            <button className="w-28 h-10 text-sm bg-teal-600 text-white font-medium hover:bg-teal-800 duration-300 rounded-md px-2 ml-4 mt-2"  onClick={searchRestaurant}>Search</button>
         </div>
-        <h1 className='text-2xl font-medium text-gray-700 mt-16 ml-16'>Recent searches</h1>
         <div className="relative flex items-center gap-8 pb-10 px-16 cursor-pointer">
-            <div id="slider" className="w-full h-max py-4 overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
-            {
-                tiles.map(({id, src, title, style, details}) => (
-                    <PopularRestaurants id={id} src={src} title={title} style={style} details={details} />
-                ) )
-            }
-            </div>
         </div>
         {
             restaurants.map((restaurant) => (

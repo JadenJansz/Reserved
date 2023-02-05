@@ -14,7 +14,7 @@ const AdminRestaurantCard = ({ restaurant }) => {
     <div className='pl-16'>
       {/* <img className="w-[266px] rounded-t-xl h-44 ease-in-out duration-300" src={src} alt="" /> */}
         <div className="flex justify-start space-x-14 px-2 border-b-2 border-teal-100 py-6">
-          <img src={Hilton} className="w-72 h-max rounded-lg"></img>
+          <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[0] : 'placeholder.jpg'}`} className="w-72 h-max rounded-lg"></img>
           <div>
             <h2  className="mt-4 text-2xl font-semibold text-gray-700">{restaurant.Name}</h2>
             <p className="text-lg pb-4 text-gray-500 mb-8">{restaurant.AddressLine3}</p>

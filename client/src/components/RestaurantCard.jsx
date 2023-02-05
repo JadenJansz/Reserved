@@ -20,14 +20,14 @@ const RestaurantCard = ({ restaurant }) => {
         </div>
         <div>
           <h3 className='text-2xl text-gray-700 font-semibold'>{restaurant.Name}</h3>
-          <h3 className='text-lg text-gray-400 font-medium mb-6'>Bambalapitiya, Colombo -  Sri Lanka.</h3>
+          <h3 className='text-lg text-gray-400 font-medium mb-6'>{restaurant.AddressLine3}</h3>
           <div className='flex mb-8'>
             <FaStar size={20} className="text-yellow-400 ml-1"/>
             <FaStar size={20} className="text-yellow-400 ml-1"/>
             <FaStar size={20} className="text-yellow-400 ml-1"/>
             <FaStar size={20} className="text-yellow-400 ml-1"/>
             <FaStar size={20} className="text-yellow-400 ml-1"/>
-            <h1 className='text-sm font-semibold text-gray-500 mt-0.5 ml-2'>(115 reviews)</h1>
+            <h1 className='text-sm font-semibold text-gray-500 mt-0.5 ml-2'>({Math.floor(Math.random() * (200 - 50) + 50)}) reviews</h1>
           </div>
           <button className="mx-auto w-72 h-14 bg-teal-500 text-white font-semibold hover:bg-teal-700 duration-300 rounded-xl px-10 py-4" onClick={handleClick}>Make a reservation</button>
         </div>

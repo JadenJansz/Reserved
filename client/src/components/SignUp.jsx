@@ -20,12 +20,12 @@ const SignUp = () => {
     })
 
     const schema = yup.object().shape({
-        email: yup.string().email().required(),
-        firstName: yup.string().required(),
-        lastName: yup.string().required(),
-        contactNumber: yup.string().length(10).required(),
-        city: yup.string().required(),
-        password: yup.string().required(),
+        email: yup.string().email().required("* email cannot be empty"),
+        firstName: yup.string().required("* first name cannot be empty"),
+        lastName: yup.string().required("* last name cannot be empty"),
+        contactNumber: yup.string().length(10).required("* contact has only 10 characters"),
+        city: yup.string().required("* city cannot be empty"),
+        password: yup.string().required("* password cannot be empty"),
         confirmPassword: yup.string().oneOf([yup.ref("password"), null])
     })
 
@@ -86,7 +86,7 @@ const SignUp = () => {
                 <p className="ml-2 text-sm text-rose-600">{errors.password?.message}</p>
 
                 <input type="password" placeholder="Confirm Password" className="w-full h-12 bg-teal-100 rounded-xl px-4 py-4 text-base border-0" {...register("confirmPassword")} />
-                <p className="ml-2 text-sm text-rose-600">{errors.confirmPassword?.message}</p>
+                <p className="ml-2 text-sm text-rose-600">{errors.confirmPassword && "*passwords do not match"}</p>
 
                 <div className="flex justify-center mt-8"> 
                     <button className="w-72 h-12 bg-teal-500 text-white font-semibold hover:bg-teal-600 duration-300 rounded-xl px-10">Sign Up</button>

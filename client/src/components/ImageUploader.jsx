@@ -64,7 +64,6 @@ const ImageUploader = ({ id, data }) => {
   
     return (
       <section>
-        <label className='imageLabel' />
           <BiImageAdd className='w-16 h-16'/>
            Browse and add images from your local computer
         {

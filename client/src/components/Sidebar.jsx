@@ -1,10 +1,24 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import React, { useState} from 'react'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useStateContext } from '../contextProviders/ContextProvider'
 import { WebsiteAdminLinks, RestaurantAdminLinks } from '../data/sidebarData'
+import Popup from '../components/Warning'
 
 const Sidebar = () => {
   const { restaurantSidebar } = useStateContext();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const navigation = useNavigate();
+
+  const removeData = async (id) => {
+    navigation('/admin_login')
+
+   }
+
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  } 
 
     const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-lg font-semibold m-2';
     const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-base text-gray-700 font-medium m-2';
@@ -64,7 +78,20 @@ const Sidebar = () => {
               ))
             )
           }
-          <NavLink className="relative top-64 text-base text-gray-700 font-medium ml-6">Logout</NavLink>
+          <NavLink onClick={togglePopup} className="relative top-64 text-base text-gray-700 font-medium ml-6">Logout</NavLink>
+          {isOpen && <Popup
+          content={<>
+            <div className="">
+              <h1 className="text-3xl font-bold mb-8 text-center">Warning !</h1>
+              <h1 className="text-base text-gray-700 font-semibold mt-8 text-center mx-4">Are you sure you want to leave ?</h1>
+              <div className="flex justify-center space-x-6 mt-10 mb-4">
+                <button className="w-48 h-12 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2" onClick={() => removeData()}>Leave</button>
+                <button className="w-48 h-12 text-sm bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2" onClick={togglePopup}>Stay</button>
+            </div>                
+            </div>
+          </>}
+          handleClose={togglePopup}
+          />}
           </div>
         </>
     </div>
