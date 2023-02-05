@@ -36,26 +36,30 @@ const ReportViewer = () => {
         </div>
           <div className="container">
             {state.data.length === 0 ? (
-              "You currently have no data created"
+              <div className='px-28'>
+                <h1>
+                  No data available for the selection !
+                </h1>
+              </div>
             ) : (
               <>
-              <h3 className='font-semibold text-xl text-gray-800 py-2 px-2'>Monthly Icome Report</h3>
+              <h3 className='font-semibold text-xl text-gray-800 py-2 px-2'>Monthly Income Report</h3>
               <h3 className='font-medium text-lg text-gray-900 py-1 px-2'>Year : {state.criteria.year}</h3>
               <h3 className='font-medium text-lg text-gray-900 py-1 px-2'>Month : {state.criteria.month}</h3>
               <table className="table table-auto mt-6 min-w-full">
                 <thead className='bg-white border-b'>
                   <tr>
-                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
-                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Date</th>
-                      <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Table Size</th>
+                      <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
+                      <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Date</th>
+                      <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Table Size</th>
                   </tr>
                 </thead>
                 <tbody>
                   {state.data.map(restaurant => (
-                    <tr key={restaurant.ReservationID} class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Name}</td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Date.substring(0,10)}</td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.TableSize}</td>
+                    <tr key={restaurant.ReservationID} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Name}</td>
+                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Date.substring(0,10)}</td>
+                      <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.TableSize}</td>
                     </tr>
                   ))}
                   <tr>
@@ -68,16 +72,16 @@ const ReportViewer = () => {
                   </tr>
                 </tbody>
               </table>
+                <div className="noprint">
+                    <button
+                      className="btn btn-primary w-auto ml-44 mt-6 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg"
+                      onClick={() => window.print()}
+                    >
+                      Generate PDF
+                    </button>
+                </div>
               </>
             )}
-          </div>
-          <div className="noprint">
-              <button
-                className="btn btn-primary w-auto ml-44 mt-6 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg"
-                onClick={() => window.print()}
-              >
-                Generate PDF
-              </button>
           </div>
       </div>
     )
@@ -93,7 +97,11 @@ const ReportViewer = () => {
           {/* <ReportViewer data={data} /> */}
             <div className="container">
               {state.data.length === 0 ? (
-                "You currently have no data created"
+                <div className='px-28'>
+                  <h1>
+                    No data available for the selection !
+                  </h1>
+                </div>
               ) : (
                 <>
                 <h3 className='font-semibold text-xl text-gray-800 py-2 px-2'>Monthly Restaurant Registration Report</h3>
@@ -102,17 +110,17 @@ const ReportViewer = () => {
                 <table className="table table-auto mt-6 min-w-full">
                   <thead className='bg-white border-b'>
                     <tr>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Address</th>
-                        <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">Contact Number</th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Name</th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Address</th>
+                        <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">Contact Number</th>
                     </tr>
                   </thead>
                   <tbody>
                     {state.data.map(restaurant => (
-                      <tr key={restaurant.AddressLine1} class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Name}</td>
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.AddressLine1 + " " + restaurant.AddressLine2 + " " + restaurant.AddressLine3}</td>
-                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                      <tr key={restaurant.AddressLine1} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.Name}</td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{restaurant.AddressLine1 + " " + restaurant.AddressLine2 + " " + restaurant.AddressLine3}</td>
+                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                           {restaurant.ContactNumber}
                         </td>
                       </tr>

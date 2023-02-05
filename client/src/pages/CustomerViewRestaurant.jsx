@@ -100,19 +100,17 @@ const CustomerViewRestaurant = () => {
             business centre.</h1>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Photos</h1>
             <div className="flex justify-center space-x-4 mt-8 mb-20">
-              <div>
-                <img src={Hilton} className="w-96 h-60 rounded-lg"></img>
+            <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[0] : 'placeholder.jpg'}`} className="w-96 h-60 rounded-lg"></img>
               </div>
               <div>
                 <div className="flex justify-between mb-4">
-                  <img src={Hilton} className="w-48 h-28 mr-4 rounded-md"></img>
-                  <img src={Hilton} className="w-48 h-28 rounded-md"></img>
+                  <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[1] : 'placeholder.jpg'}`} className="w-48 h-28 mr-4 rounded-md"></img>
+                  <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[2] : 'placeholder.jpg'}`} className="w-48 h-28 rounded-md"></img>
                 </div>
                 <div className="flex justify-between">
-                  <img src={Hilton} className="w-48 h-28 mr-4 rounded-md"></img>
-                  <img src={Hilton} className="w-48 h-28 rounded-md"></img>
+                  <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[3] : 'placeholder.jpg'}`} className="w-48 h-28 mr-4 rounded-md"></img>
+                  <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[4] : 'placeholder.jpg'}`} className="w-48 h-28 rounded-md"></img>
                 </div>
-              </div>
             </div>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500 mb-8">Menu</h1>
               <embed src={`http://localhost:8800/${restaurant.Menu != undefined ? JSON.parse(restaurant.Menu)[0] : 'placeholder.jpg'}`} type="application/pdf" width="100%" height="650px"  />

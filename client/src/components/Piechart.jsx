@@ -1,12 +1,12 @@
+import axios from 'axios';
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts';
 
-const data = [
-  { name: 'Completed', value: 700 },
-  { name: 'Cancelled', value: 300 },
-];
 
 const renderActiveShape = (props) => {
+  
+
+
   const RADIAN = Math.PI / 180;
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
   const sin = Math.sin(-RADIAN * midAngle);
@@ -44,8 +44,8 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#00C49F">{`Resv. ${value}`}</text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#FF8042">
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} fontSize={14} textAnchor={textAnchor} fill="#00C49F">{`Count = ${value}`}</text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} fontSize={10}  dy={18} textAnchor={textAnchor} fill="#FF8042">
         {`(Rate ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
@@ -72,7 +72,10 @@ export default class Example extends PureComponent {
           <Pie
             activeIndex={this.state.activeIndex}
             activeShape={renderActiveShape}
-            data={data}
+            data={[
+              { name: 'Completed', value: this.props.status.Total },
+              { name: 'Pending', value: this.props.status.Count },
+            ]}
             cx="50%"
             cy="50%"
             innerRadius={60}

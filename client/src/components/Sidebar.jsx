@@ -81,7 +81,10 @@ const Sidebar = () => {
           }
           <div className='flex ml-8 relative top-52'>
             <GoSignOut className='text-gray-700 mt-1'/>
-            <NavLink onClick={togglePopup} className="text-base text-gray-700 font-medium ml-4">Logout</NavLink>
+            <NavLink to='/admin_logout' className="text-base text-gray-700 font-medium ml-4">
+              Logout
+            </NavLink>
+            {/* <NavLink onClick={togglePopup} className="text-base text-gray-700 font-medium ml-4">Logout</NavLink> */}
           </div>
           {isOpen && <Popup
           content={<>
@@ -89,7 +92,7 @@ const Sidebar = () => {
               <h1 className="text-3xl font-bold mb-8 text-center">Log out</h1>
               <h1 className="text-base text-gray-700 font-semibold mt-8 text-center mx-4">Are you sure you want to log out !</h1>
               <div className="flex justify-center space-x-6 mt-10 mb-4">
-                <button className="w-48 h-12 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2" onClick={() => removeData()}>Yes, Logout</button>
+                <button className="w-48 h-12 text-sm bg-rose-500 text-white font-medium hover:bg-rose-700 duration-300 rounded-md px-2">Yes, Logout</button>
                 <button className="w-48 h-12 text-sm bg-teal-100 text-gray-700 font-medium hover:bg-teal-300 duration-300 rounded-md px-2" onClick={togglePopup}>Cancel</button>
             </div>                
             </div>
