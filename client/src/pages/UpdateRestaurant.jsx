@@ -135,15 +135,19 @@ const UpdateRestaurant = () => {
                     <h1 className='text-base font-medium text-gray-400 mt-10'>Cuisine</h1>
                     <input type="text" placeholder="Enter available cuisine types" defaultValue={restaurantData.Cuisine} {...register("cuisine")} className="w-full h-12 bg-teal-100 border-0 rounded-lg"/>
                     <p className="ml-2 text-sm text-rose-600">{errors.cuisine?.message}</p>
-                <div className='flex justify-between '>
-                    <PdfUploader id={restaurantData.RestaurantID} />
+                <div className='flex justify-between '>                        
+                        <PdfUploader id={restaurantData.RestaurantID} />
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Operation hours</h1>
                         <div className='flex justify-start space-x-2'>
-                            <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
-                            <p className="ml-2 text-sm text-rose-600">{errors.open?.message}</p>
-                            <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
-                            <p className="ml-2 text-sm text-rose-600">{errors.close?.message}</p>
+                            <div className='block'>
+                                <input type="time" defaultValue={restaurantData.OpenTime} {...register("open")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                                <p className="ml-2 text-sm text-rose-600">{errors.open?.message}</p>
+                            </div>
+                            <div className='block'>
+                                <input type="time" defaultValue={restaurantData.CloseTime} {...register("close")} className="w-[220px] h-12 bg-teal-100 border-0 rounded-lg"/>
+                                <p className="ml-2 text-sm text-rose-600">{errors.close?.message}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -154,8 +158,8 @@ const UpdateRestaurant = () => {
             <div className='border-t-2 border-teal-500 pb-8'>
                 <h1 className='text-2xl font-medium text-gray-700 mt-10'>Images</h1>
                 <h1 className='text-base font-medium text-gray-400 mt-10'>Enter your images</h1>
-                {/* <ImageUploader /> */}
             </div>
+            {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
 
             <div className='border-t-2 border-teal-500 pb-8'>
                 <h1 className='text-xl font-medium text-gray-700 mt-10'>Parking & Facilities</h1>
@@ -167,7 +171,7 @@ const UpdateRestaurant = () => {
                     </div>
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Facilities</h1>
-                        <textarea placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2"/>
+                        <textarea placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2 pt-2 pl-4"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.facilities?.message}</p>     
                     </div>
                 </div>
@@ -198,13 +202,8 @@ const UpdateRestaurant = () => {
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p> */}
 
-        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} />}
-
-            <button>Lets Go</button>
+            <button className='w-auto ml-96 mt-6 mb-20 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg'>Update details</button>
         </form>
-
-        {restaurantData && <ImageUploader id={restaurantData.RestaurantID} data={restaurantData} className="absolute left-0 right-0 top-96" />}
-        
         </div>
     </div>
   )
