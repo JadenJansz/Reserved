@@ -4,7 +4,6 @@ import { useStateContext } from '../contextProviders/ContextProvider'
 import { WebsiteAdminLinks, RestaurantAdminLinks } from '../data/sidebarData'
 import { GoSignOut } from 'react-icons/go'
 import Popup from '../components/Logout'
-import { useState } from "react";
 
 const Sidebar = () => {
   const { restaurantSidebar } = useStateContext();
