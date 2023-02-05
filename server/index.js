@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         cb(null, 'Images')
     },
     filename: (req, file, cb) => {
-        console.log(file)
+        // console.log(file)
         cb(null, Date.now() + path.extname(file.originalname))
     }
 })
@@ -72,7 +72,7 @@ app.get("/search_restaurants_time", (req, res) => {
 })
 
 app.get("/search_restaurants_name", (req, res) => {
-    console.log(req.query)
+    // console.log(req.query)
     const sql = `SELECT * FROM restaurant WHERE Name LIKE '${req.query.name}%' `
 
     db.query(sql, (err, data) => {
@@ -152,7 +152,7 @@ app.get("/admin_login", (req, res) => {
 })
 
 app.get('/admin_restaurant_registration_report', (req, res) => {
-    console.log(req.query)
+    // console.log(req.query)
     const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined > '${req.query.year}-${req.query.month}-01' AND DateJoined < '${req.query.year}-${req.query.month}-30' ` 
 
     db.query(sql, (err, data) => {
@@ -254,7 +254,7 @@ app.get("/admin_view_reataurants", (req, res) => {
 })
 
 app.get("/current_reservations", (req, res) => {
-    // console.log(req.query)
+    console.log(req.query)
 
     const sql = `SELECT reservation.*, customer.FirstName, customer.LastName
     FROM reservation, customer 
@@ -308,7 +308,7 @@ app.post("/admin_create_restaurant", (req, res) => {
 })
 
 app.post("/add_restaurant_details", (req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     const sql = `Insert into restaurant (Name, AddressLine1, AddressLine2, AddressLine3, ContactNumber, Cuisine, OpenTime, CloseTime, ParkingDetails, PaymentOption, Website, Facilities) VALUES ('${req.body.name}','${req.body.address1}', '${req.body.address2}', '${req.body.address3}', '${req.body.contactNumber}', '${req.body.cuisine}', '${req.body.open}', '${req.body.close}', '${req.body.parking}',  '${req.body.payment}',  '${req.body.website}',  '${req.body.facilities}')`;
     
     db.query(sql, (err, data) => {
@@ -339,7 +339,7 @@ app.post("/upload_menu", upload.array("image"), (req, res) => {
     req.files.map((obj, i) => {
         arr.push(obj.filename)
     })
-    console.log(JSON.stringify(arr))
+    // console.log(JSON.stringify(arr))
 
     const sql = `UPDATE restaurant SET Menu = '${JSON.stringify(arr)}' WHERE RestaurantID = ${req.body.id}`
 
@@ -356,15 +356,15 @@ app.post("/upload_images", upload.array("image"), (req, res) => {
     req.files.map((obj, i) => {
         arr.push(obj.filename)
     })
-    console.log(arr)
+    // console.log(arr)
     const select = `SELECT * from restaurant WHERE RestaurantID = ${req.body.id}`
 
     db.query(select, (err, data) => {
-        console.log(JSON.parse(data[0].Image))
+        // console.log(JSON.parse(data[0].Image))
         if(JSON.parse(data[0].Image) !== null){
             
             const newArr = JSON.parse(data[0].Image).concat(arr)
-            console.log(newArr)
+            // console.log(newArr)
             
             const sql = `UPDATE restaurant SET Image = '${JSON.stringify(newArr)}' WHERE RestaurantID = ${req.body.id}`
             db.query(sql, (err, data) => {
@@ -383,7 +383,7 @@ app.post("/upload_images", upload.array("image"), (req, res) => {
 })
 
 app.delete("/delete_restaurant/:id", (req, res) => {
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const sql = `DELETE FROM restaurant WHERE RestaurantID = ${req.params.id}`
 
     db.query(sql, (err, data) => {
@@ -422,7 +422,7 @@ app.post("/add_reservation", (req, res) => {
 })
 
 app.put("/end_reservation/:id", (req, res) => {
-    console.log(req.params.id)
+    // console.log(req.params.id)
     const sql = `UPDATE reservation SET status = 'Cancelled' WHERE ReservationID = ${req.params.id}`
 
     db.query(sql, (err, data) => {

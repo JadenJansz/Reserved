@@ -30,10 +30,6 @@ const CustomerCompleteReservation = () => {
                     Colombo 80000
                 </p>
             </div>
-            <div className="flex justify-center space-x-6 mt-8 pb-8">
-                <button className="w-64 h-12 bg-teal-500 text-white hover:bg-teal-700 duration-300 font-semibold rounded-lg px-6 text-sm">Modify reservation</button>
-                <button className="w-64 h-12 bg-teal-100 text-gray-700 hover:bg-teal-200 duration-300 font-semibold rounded-lg px-6 text-sm">Cancel reservation</button>
-            </div>
         </div>
     </div>
   )

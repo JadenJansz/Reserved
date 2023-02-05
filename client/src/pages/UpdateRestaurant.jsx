@@ -171,7 +171,7 @@ const UpdateRestaurant = () => {
                     </div>
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Facilities</h1>
-                        <textarea rows={20} cols={20} placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2 pt-2 pl-4"/>
+                        <textarea rows={5} cols={7} placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] bg-teal-100 border-0 rounded-lg mt-2 pt-2 pl-4"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.facilities?.message}</p>     
                     </div>
                 </div>
@@ -202,7 +202,7 @@ const UpdateRestaurant = () => {
             <input type="file" multiple accept="image/*" placeholder='Images' {...register("image")} />
             <p>{errors.image?.message}</p> */}
 
-            <button className='w-auto ml-96 mt-6 mb-20 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg'>Update details</button>
+            <button className='w-auto ml-96 mt-6 mb-20 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg' type='submit'>Update details</button>
         </form>
         </div>
     </div>

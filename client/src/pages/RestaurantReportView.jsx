@@ -65,16 +65,16 @@ const RestaurantReportView = () => {
                   </tr>
                 </tbody>
               </table>
+              <div className="noprint">
+                  <button
+                    className="btn btn-primary w-auto ml-44 mt-6 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg"
+                    onClick={() => window.print()}
+                  >
+                    Generate PDF
+                  </button>
+              </div>
               </>
             )}
-          </div>
-          <div className="noprint">
-              <button
-                className="btn btn-primary w-auto ml-44 mt-6 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg"
-                onClick={() => window.print()}
-              >
-                Generate PDF
-              </button>
           </div>
       </div>
   )

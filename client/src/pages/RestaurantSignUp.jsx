@@ -36,7 +36,7 @@ const RestaurantSignUp = () => {
     const onSubmit = async (data) => {
         console.log(data)
 
-        emailjs.sendForm('service_t7uab8a', 'template_5f62s7x', form.current, 'WxqAsIdocDRfM1kpI')
+        emailjs.sendForm('service_t7uab8a', 'template_2j6c6ge', form.current, 'WxqAsIdocDRfM1kpI')
             .then((result) => {
                 console.log(result.text);
                 alert("Request Sent successfully");

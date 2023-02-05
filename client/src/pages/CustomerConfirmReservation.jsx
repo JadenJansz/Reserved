@@ -71,16 +71,12 @@ const CustomerConfirmReservation = () => {
         style: {
           base: {
             iconColor: '#c4f0ff',
-            color: '#fff',
             fontWeight: '500',
             fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
             fontSize: '16px',
             fontSmoothing: 'antialiased',
             ':-webkit-autofill': {
               color: '#fce883',
-            },
-            '::placeholder': {
-              color: '#87BBFD',
             },
           },
           invalid: {
@@ -116,7 +112,6 @@ const CustomerConfirmReservation = () => {
           </div>
           <div className="flex">
             <h1 className="text-sm font-normal text-teal-500 mb-4 mt-6">Please confirm your reservation within</h1>
-            <h1 className="text-sm font-bold text-teal-500 ml-2 mb-4 mt-6">4:59 min</h1>
           </div>
           <h1 className="text-lg font-bold text-gray-700">
             Sign in before filling the reservation details.

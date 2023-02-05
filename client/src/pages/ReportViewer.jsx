@@ -131,9 +131,6 @@ const ReportViewer = () => {
                     </tr>
                   </tbody>
                 </table>
-                </>
-              )}
-            </div>
             <div className="row">
                 <button
                   className="btn btn-primary w-auto ml-44 mt-6 h-12 bg-teal-500 text-lg font-medium text-white px-4 hover:bg-teal-700 duration-300 rounded-lg"
@@ -141,6 +138,9 @@ const ReportViewer = () => {
                 >
                   Generate PDF
                 </button>
+            </div>
+                </>
+              )}
             </div>
         </div>
     )
