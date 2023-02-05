@@ -33,7 +33,11 @@ const RestaurantReportView = () => {
         </div>
           <div className="container">
             {state.data.length === 0 ? (
-              "You currently have no data created"
+              <div className='px-28'>
+                <h1>
+                  No data available for the selection !
+                </h1>
+              </div>
             ) : (
               <>
               <h3 className='font-semibold text-xl text-gray-800 py-2 px-2'>Monthly Reservation Report</h3>

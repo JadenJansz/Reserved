@@ -153,7 +153,7 @@ app.get("/admin_login", (req, res) => {
 
 app.get('/admin_restaurant_registration_report', (req, res) => {
     console.log(req.query)
-    const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined < '${req.query.year}-${req.query.month}-30' AND DateJoined >  '${req.query.year}-${req.query.month}-01' ` 
+    const sql = `SELECT Name, AddressLine1,AddressLine2,AddressLine3,ContactNumber FROM restaurant WHERE DateJoined > '${req.query.year}-${req.query.month}-01' AND DateJoined < '${req.query.year}-${req.query.month}-30' ` 
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
@@ -164,7 +164,7 @@ app.get('/admin_restaurant_registration_report', (req, res) => {
 
 app.get('/admin_income_report', (req, res) => {
 
-    const sql = `SELECT restaurant.Name, reservation.* FROM restaurant, reservation WHERE restaurant.RestaurantID = reservation.RestaurantID AND DateJoined < '${req.query.year}-${req.query.month}-30' AND DATE >  '${req.query.year}-${req.query.month}-01'`
+    const sql = `SELECT restaurant.Name, reservation.* FROM restaurant INNER JOIN reservation ON restaurant.RestaurantID = reservation.ReservationID WHERE DateJoined > '${req.query.year}-${req.query.month}-01' AND DateJoined < '${req.query.year}-${req.query.month}-30'`
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err)
@@ -424,6 +424,36 @@ app.post("/add_reservation", (req, res) => {
 app.put("/end_reservation/:id", (req, res) => {
     console.log(req.params.id)
     const sql = `UPDATE reservation SET status = 'Cancelled' WHERE ReservationID = ${req.params.id}`
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+})
+
+app.get("/get_customer_count", (req, res) => {
+
+    const sql = 'SELECT COUNT(CustomerID) as count FROM customer'
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+})
+
+app.get("/reservation_status", (req, res) => {
+
+    const sql = "SELECT (SELECT COUNT(*) FROM reservation) as Total,(SELECT COUNT(*) FROM reservation) - (SELECT COUNT(status) FROM reservation WHERE status='Cancelled') as Count"
+
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+})
+
+app.get("/payment_total", (req, res) => {
+
+    const sql = 'SELECT SUM(Amount) as amount FROM payment'
 
     db.query(sql, (err, data) => {
         if(err) return res.json(err);

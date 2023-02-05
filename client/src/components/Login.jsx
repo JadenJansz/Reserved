@@ -54,12 +54,6 @@ const Login = ({ handleClose }) => {
             <div className="flex justify-center mt-8"> 
                 <button className="w-48 bg-teal-600 text-white font-semibold hover:shadow-md hover:shadow-teal-500 hover:scale-105 duration-300 rounded-xl px-10 py-4">Sign in</button>
             </div>
-            <h1 className="text-sm font-semibold mt-8 text-center">- Or Sign in with -</h1>
-            <div className="flex justify-center gap-10 cursor-pointer mt-4">
-                <FcGoogle size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300"/>
-                <FaFacebook size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-blue-700"/>
-                <FaTwitter size={50} className="rounded-full shadow-md p-3 shadow-gray-400 hover:scale-105 duration-300 text-sky-500"/>
-            </div>
           </form>
               <h1 className="text-xs font-semibold mt-10 text-center">Don't have an account ? <Link className="text-sm font-semibold text-teal-600 cursor-pointer" to='sign_up'>Sign up</Link></h1>
         </div>

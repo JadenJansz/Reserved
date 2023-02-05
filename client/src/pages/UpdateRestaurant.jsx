@@ -171,7 +171,7 @@ const UpdateRestaurant = () => {
                     </div>
                     <div className='block'>
                         <h1 className='text-base font-medium text-gray-400 mt-10'>Facilities</h1>
-                        <textarea placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2 pt-2 pl-4"/>
+                        <textarea rows={20} cols={20} placeholder='' defaultValue={restaurantData.Facilities} {...register("facilities")} className="w-[450px] h-12 bg-teal-100 border-0 rounded-lg mt-2 pt-2 pl-4"/>
                         <p className="ml-2 text-sm text-rose-600">{errors.facilities?.message}</p>     
                     </div>
                 </div>
