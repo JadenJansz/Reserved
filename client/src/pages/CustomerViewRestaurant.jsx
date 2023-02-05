@@ -14,7 +14,11 @@ const CustomerViewRestaurant = () => {
 
     const [restaurant, setRestaurant] = useState({});
     const [reviews, setReviews] = useState([])
-    const [tableDetails, setTableDetails] = useState({})
+    const [tableDetails, setTableDetails] = useState({
+        count: '1',
+        date: "2023-02-06",
+        time: '10.00',
+    })
 
     const { state } = useLocation();
     const navigation = useNavigate(); 
@@ -32,7 +36,7 @@ const CustomerViewRestaurant = () => {
     
     useEffect(() => {
         const table = JSON.parse(localStorage.getItem('table_details'))
-        // console.log(table)
+        console.log(table)
         setTableDetails(table)
         setRestaurant(state)
         getReview()
@@ -110,8 +114,8 @@ const CustomerViewRestaurant = () => {
                 </div>
               </div>
             </div>
-            <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Menu</h1>
-              <embed src={`http://localhost:8800/${restaurant.Menu != undefined ? JSON.parse(restaurant.Menu)[0] : 'placeholder.jpg'}`} type="application/pdf" width="100%" height="650px" />
+            <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500 mb-8">Menu</h1>
+              <embed src={`http://localhost:8800/${restaurant.Menu != undefined ? JSON.parse(restaurant.Menu)[0] : 'placeholder.jpg'}`} type="application/pdf" width="100%" height="650px"  />
               {/* <div style={{ backgroundColor: 'black' }}>
 
               <Document file="https://cors-anywhere.herokuapp.com/https://www.africau.edu/images/default/sample.pdf" className='react-pdf__Page__canvas' >
@@ -148,7 +152,7 @@ const CustomerViewRestaurant = () => {
             <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Location</h1>
             <Iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15842.926893021824!2d79.8467957!3d6.9226396!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2a84fafa80297e3f!2sTaj%20Samudra%2C%20Colombo!5e0!3m2!1sen!2slk!4v1673443162058!5m2!1sen!2slk" 
             className="w-[396px] h-72"></Iframe>
-            <h1 className="text-base font-semibold text-gray-700 mt-4 px-10 text-center">25, Galle Face center road, Colombo 8000</h1>
+            <h1 className="text-base font-semibold text-gray-700 mt-4 px-10 text-center">{restaurant.AddressLine1} {restaurant.AddressLine2} {restaurant.AddressLine3}</h1>
           </div>
         </div>
         <div>

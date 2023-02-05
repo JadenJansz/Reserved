@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Hilton from "../assets/hilton.jpg"
 import Cinnamon from "../assets/cinnamon.jpg"
 import Taj from "../assets/taj.jpg"
 import Shangrila from "../assets/shangrila.jpg"
 import {MdChevronLeft, MdChevronRight} from 'react-icons/md'
 import PopularRestaurants from './PopularRestaurants'
+import axios from 'axios'
 
 const Popular = () => {
 
@@ -18,78 +19,23 @@ const Popular = () => {
         slider.scrollLeft = slider.scrollLeft + 1140
     }
 
-    const tiles = [
-        {
-            id: 1,
-            src: Hilton,
-            title: 'Hilton Grand',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 2,
-            src: Cinnamon,
-            title: 'Cinnamon Grand',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 3,
-            src: Taj,
-            title: 'Taj Samudra',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 4,
-            src: Shangrila,
-            title: 'Shangri La',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 5,
-            src: Shangrila,
-            title: 'Shangri La',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 6,
-            src: Hilton,
-            title: 'Hilton Grand',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 7,
-            src: Cinnamon,
-            title: 'Cinnamon Grand',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 8,
-            src: Taj,
-            title: 'Taj Samudra',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 9,
-            src: Shangrila,
-            title: 'Shangri La',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-        {
-            id: 10,
-            src: Shangrila,
-            title: 'Shangri La',
-            details: 'International - Colombo',
-            style: 'border-gray-200'
-        },
-    ]
+    const [restaurants, setRestaurants] = useState([])
+
+    const getRestaurants = async () => {
+        try {
+            const response = await axios.get("http://localhost:8800/search_restaurants_name", { params: { name: '' } } )
+            console.log(response.data)
+            setRestaurants(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    useEffect(() => {
+
+        getRestaurants();
+        console.log('lol')
+    }, [])
 
   return (
     <div className="bg-white w-screen h-max sm:h-64 px-4 py-10">
@@ -102,9 +48,14 @@ const Popular = () => {
             <MdChevronLeft onClick={slideLeft} className="w-14 h-12 rounded-full shadow-sm shadow-teal-600 hover:shadow-md hover:shadow-teal-600 hover:scale-105 duration-300"/>
             <div id="slider" className="w-full h-max py-4 overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide">
             {
-                tiles.map(({id, src, title, style, details}) => (
-                    <PopularRestaurants id={id} src={src} title={title} style={style} details={details} />
-                ) )
+                restaurants && (
+                    
+                    restaurants.map((restaurant) => (
+                        <PopularRestaurants id={restaurant.RestaurantID} restaurant={restaurant}  style={'border-gray-200'} />
+                            
+                    ))
+                )
+                  
             }
             </div>
             <MdChevronRight onClick={slideRight} className="w-14 h-12 rounded-full shadow-sm shadow-teal-600 hover:shadow-md hover:shadow-teal-600 hover:scale-105 duration-300"/>
