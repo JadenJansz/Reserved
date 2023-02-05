@@ -29,6 +29,7 @@ import ReportSelector from './components/ReportSelector'
 import ReportViewer from './pages/ReportViewer'
 import RestaurantReportSelector from './components/RestaurantReportSelector'
 import RestaurantReportView from './pages/RestaurantReportView'
+import AdminLogout from './pages/AdminLogout'
 
 
 const App = () => {
@@ -64,6 +65,7 @@ const App = () => {
           <Route path='/restaurant_signup' element={<RestaurantSignUp /> } />
           <Route path='/restaurant_report' element={<RestaurantReportSelector />} />
           <Route path='/restaurant_report_view' element={<RestaurantReportView />} />
+          <Route path='/admin_logout' element={<AdminLogout />} />
 
           {/* Admin Pages */}
           <Route path='/admin_login' element={<AdminLogin />} />
