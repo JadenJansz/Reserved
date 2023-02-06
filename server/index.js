@@ -72,7 +72,7 @@ app.get("/search_restaurants_time", (req, res) => {
 })
 
 app.get("/search_restaurants_name", (req, res) => {
-    // console.log(req.query)
+    console.log(req.query)
     const sql = `SELECT * FROM restaurant WHERE Name LIKE '${req.query.name}%' `
 
     db.query(sql, (err, data) => {

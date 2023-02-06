@@ -29,7 +29,7 @@ const AdminLogin = () => {
     })
 
     const onSubmit = async (data) => {
-        console.log(data)
+        // console.log(data)
 
         try {
             const response = await axios.post("http://localhost:8800/admin_login", data)
@@ -40,7 +40,7 @@ const AdminLogin = () => {
                 return
             } 
             if(response.data.data === "Inactive User"){
-                console.log("lol")
+                alert("User does not exist")
                 return
             }
             if(response.data.role === "ResAdmin"){
