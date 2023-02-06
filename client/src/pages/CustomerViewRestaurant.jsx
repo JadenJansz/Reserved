@@ -99,19 +99,19 @@ const CustomerViewRestaurant = () => {
             elegant lounges. Other amenities include an outdoor pool and tennis courts, plus a fitness centre and a 
             business centre.</h1>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500">Photos</h1>
-            <div className="flex justify-center space-x-4 mt-8 mb-20">
+            <div className="flex justify-center space-x-4 mt-8 mb-10">
             <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[0] : 'placeholder.jpg'}`} className="w-96 h-60 rounded-lg"></img>
-              </div>
               <div>
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-center space-x-4 mb-4">
                   <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[1] : 'placeholder.jpg'}`} className="w-48 h-28 mr-4 rounded-md"></img>
                   <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[2] : 'placeholder.jpg'}`} className="w-48 h-28 rounded-md"></img>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-center space-x-4">
                   <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[3] : 'placeholder.jpg'}`} className="w-48 h-28 mr-4 rounded-md"></img>
                   <img src={`http://localhost:8800/${restaurant.Image != undefined ? JSON.parse(restaurant.Image)[4] : 'placeholder.jpg'}`} className="w-48 h-28 rounded-md"></img>
                 </div>
             </div>
+              </div>
             <h1 className="text-xl text-gray-800 font-semibold mt-14 pb-4 border-b-2 border-teal-500 mb-8">Menu</h1>
               <embed src={`http://localhost:8800/${restaurant.Menu != undefined ? JSON.parse(restaurant.Menu)[0] : 'placeholder.jpg'}`} type="application/pdf" width="100%" height="650px"  />
               {/* <div style={{ backgroundColor: 'black' }}>
@@ -131,7 +131,7 @@ const CustomerViewRestaurant = () => {
         <div>
           <div className="block w-[400px] border-2 border-teal-500 rounded-lg p-6 mb-8">
             <h1 className="text-xl font-bold text-gray-800 mb-6 text-center">Make a reservation</h1>
-            <input type="date" id="date" name="date" defaultValue={tableDetails.date} onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 rounded-lg px-4 text-sm border-0" /><br />
+            <input type="date" id="date" name="date" defaultValue="2023-02-06" onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 rounded-lg px-4 text-sm border-0" /><br />
             <select name="time" id="time" onChange={handleChange} className="w-full h-12 mb-4 bg-teal-100 text-sm px-4 rounded-lg">
                     <option disabled={true}>Select your time</option>
                     {options.map((option) => (

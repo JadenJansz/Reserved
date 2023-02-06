@@ -14,6 +14,11 @@ const CustomerHome = () => {
     useEffect(() => {
         setSidebarActive(false)
         setRestaurantSidebar(false)
+        localStorage.setItem('table_details', JSON.stringify({
+          date: "",
+          time: '10.00',
+          count: '1'
+      }))
     }, [])
 
 
